@@ -2,3 +2,23 @@
     margin: 0;
     padding: 0;
 }
+body{
+    padding: 1.5%;
+}
+#sun{
+    display: none;
+}
+.vid{
+    background-image: url('/IMAGES/bg.png');
+    width: 60%;
+    border-radius: 2%;
+}
+.vid video{
+    margin-left: 30%;
+}
+.card-container {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}

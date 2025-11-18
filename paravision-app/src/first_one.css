@@ -4,7 +4,7 @@
 }
 body{
     font-family:'Arial Narrow', Arial, sans-serif;
-    background: url('/IMAGES/bg.png');
+    background: url('./IMAGES/bg.png');
     background-size: cover;
     overflow:hidden ;
     display: flex;
@@ -18,9 +18,16 @@ body{
 #main{
     font-size: 90px;
     color: white;
+    
+}
+.move{
+    margin-top: 35%;
 }
 .down{
     font-size: 20px;
+}
+.main{
+    display: flex;
 }
 .words{
     text-align: center;
@@ -36,7 +43,13 @@ body{
   background-color: #f0f0f0;
   border-radius: 5px;
   overflow: hidden;
+  animation: slide 1s ease-in-out;
+
 }
+
+@keyframes slide {
+    0% { transform: translateX(-30px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }}
 
 .loader-bar {
   width: 0%;

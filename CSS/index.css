@@ -13,12 +13,17 @@ body{
     margin-top: 7%;
     font-size: 20px;
     margin-right: 5%;
-    color: #09ece1;
+    color: gold;
 }
 #main{
-    font-size: 70px;
+    font-size: 80px;
     color: white;
 }
 .down{
     font-size: 20px;
+    z-index: 1000;
+}
+.words{
+    text-align: center;
+    margin-right: 20px;
 }

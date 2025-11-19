@@ -13,7 +13,7 @@ body{
     margin-top: 7%;
     font-size: 20px;
     margin-right: 5%;
-    color: #7a4f2c;
+    color: rgb(1, 41, 26);
 }
 #main{
     font-size: 90px;
@@ -21,7 +21,7 @@ body{
     
 }
 .move{
-    margin-top: 35%;
+    margin-top: 10%;
 }
 .down{
     font-size: 20px;
@@ -29,7 +29,40 @@ body{
 .main{
     display: flex;
 }
+.a{
+    color: white;
+    margin-top: -2%;
+    margin-right: 30%;
+    position: absolute;
+    width: 100%;
+    margin-left: -13%;
+}
+.particles{
+    animation: float 4s ease-in-out infinite;
+    margin-top: 20%;
+    z-index: 1000;
+    margin-left: 4%;
+    position: absolute;
+}
+@keyframes float {
+    0% {
+    transform: translateX(0px);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
 .words{
+    margin-top: 2%;
     text-align: center;
     margin-right: 20px;
     animation: move 2s ease-in-out;
@@ -54,6 +87,6 @@ body{
 .loader-bar {
   width: 0%;
   height: 100%;
-  background-color: brown;
+  background-color: red;
   transition: width 0.5s ease-in-out;
 }

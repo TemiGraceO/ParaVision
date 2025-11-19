@@ -87,6 +87,6 @@ body{
 .loader-bar {
   width: 0%;
   height: 100%;
-  background-color: red;
+  background-color: rgb(77, 8, 8);
   transition: width 0.5s ease-in-out;
 }

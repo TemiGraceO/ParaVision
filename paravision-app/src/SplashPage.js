@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import './first_one.css';
 
-
 function SplashPage() {
   useEffect(() => {
     const loaderBar = document.querySelector('.loader-bar');
     const logo = document.querySelector('.logo');
     const splashPage = document.querySelector('.splash-page');
     const firstPage = document.querySelector('.first');
+    
 
     loaderBar.style.width = '0%';
 
@@ -21,9 +21,9 @@ function SplashPage() {
         splashPage.classList.add('animate-out');
         setTimeout(() => {
           firstPage.classList.add('animate-in');
-        }, 500); // wait for 0.5s before fading in .first
+        }, 400); // wait for 0.5s before fading in .first
       }
-    }, 500);
+    }, 400);
   }, []);
 
   return (
@@ -117,6 +117,7 @@ function SplashPage() {
 <div className='footer'>TeamABU2025/2026</div>
 
       </div>
+      
     </>
   );
 }

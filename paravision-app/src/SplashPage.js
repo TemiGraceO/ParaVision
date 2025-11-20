@@ -66,20 +66,53 @@ function SplashPage() {
                         ParaVision offers cutting-edge tools for accurate and <br/>
                         effiecient cellular analysis, empowering you to make<br/> a confident decison
                       </p>
-                      <button className='btn'>Start New Diagnostics</button>
+                      <button className='btn'>About App</button>
                     </div>
                   </div>
                   <div className='third'>
                       <h2>Core Functionalities</h2>
-                      <p>Streamline your Diagnostic workflow with our powerful and intuitive features</p>
-                    </div>
+                                          </div>
                     <div class="horizontal-layout">
   <div class="item">
-    <h5>Run Test</h5><p>Initialize new tests with precision and speed</p>
+    <h5><svg width="40" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d6efd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M9 3h6"></path>
+  <path d="M10 3v12a4 4 0 1 0 4 0V3"></path>
+  <line x1="9" y1="9" x2="15" y2="9"></line>
+</svg><br/>Run Test</h5><p>Initialize new tests with precision and speed</p>
   </div>
-  <div class="item"><h5>Patients Management</h5><p>Easily view, add and merge patients records</p></div>
-  <div class="item"><h5>Review History</h5><p>Access past test results of patients</p></div>
-  <div class="item"><h5>Data Analytics</h5><p>Visualize trends and gain statistical insights</p></div>
+  <div class="item"><svg width="44" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d6efd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="9" cy="7" r="4"></circle>
+  <path d="M5 21v-2a4 4 0 0 1 8 0v2"></path>
+  <line x1="16" y1="10" x2="22" y2="10"></line>
+  <line x1="16" y1="14" x2="22" y2="14"></line>
+  <line x1="16" y1="18" x2="22" y2="18"></line>
+</svg>
+<br/><h5>Patients Management</h5><p>Easily view, add and merge patients records</p></div>
+  <div class="item"><h5><svg width="40" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d6efd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="1 4 1 10 7 10"></polyline>
+  <path d="M3.51 15a9 9 0 1 0 .49-9"></path>
+  <line x1="12" y1="7" x2="12" y2="12"></line>
+  <line x1="12" y1="12" x2="15" y2="15"></line>
+</svg>
+<br/>Review History</h5><p>Access past test results of patients</p></div>
+  <div class="item"><h5><svg width="48" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d6efd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="4" y1="20" x2="4" y2="10"></line>
+  <line x1="10" y1="20" x2="10" y2="4"></line>
+  <line x1="16" y1="20" x2="16" y2="14"></line>
+  <polyline points="3 6 10 12 16 8 21 14"></polyline>
+</svg><br/>Data Analytics</h5><p>Visualize trends and gain statistical insights</p></div>
+  <div class="item"><h5><svg width="48" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d6efd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="4" y1="20" x2="4" y2="10"></line>
+  <line x1="10" y1="20" x2="10" y2="4"></line>
+  <line x1="16" y1="20" x2="16" y2="14"></line>
+  <polyline points="3 6 10 12 16 8 21 14"></polyline>
+</svg><br/>Data Analytics</h5><p>Visualize trends and gain statistical insights</p></div>
+  <div class="item"><h5><svg width="48" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d6efd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="4" y1="20" x2="4" y2="10"></line>
+  <line x1="10" y1="20" x2="10" y2="4"></line>
+  <line x1="16" y1="20" x2="16" y2="14"></line>
+  <polyline points="3 6 10 12 16 8 21 14"></polyline>
+</svg><br/>Data Analytics</h5><p>Visualize trends and gain statistical insights</p></div>
 </div>
 <div className='footer'>TeamABU2025/2026</div>
 

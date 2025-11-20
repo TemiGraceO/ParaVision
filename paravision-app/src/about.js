@@ -12,8 +12,11 @@ const About = ({ onClose }) => {
 
   return (
     <div className={`about-container ${closing ? 'slide-out' : ''}`}>
-      <h2>About App<button onClick={handleClose} className='btn2'>X</button></h2>
-      
+        <button onClick={handleClose} className='btn2'>X</button>
+      <h3>About ParaVision</h3><br/>
+      <video width="300" height="200" controls>
+        <source src="ParaVision Demo.mp4" type="video/mp4" />
+        Your browser does not support the video tag.</video>
     </div>
   );
 };

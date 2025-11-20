@@ -1,0 +1,44 @@
+.options{
+    display: flex;
+    gap: 20%;
+}
+.left, .right{
+    border: 1px solid black;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 70px;
+    border-radius: 10px;
+}
+.left:hover, .right:hover{
+    background-color: lightgray;
+    cursor: pointer;
+}
+.left:clicked, .right:clicked{
+    background-color: lightgray;
+}
+.smear{
+    margin-bottom: 10px;
+}
+.two{
+    display: flex;
+    gap: 10%;
+}
+.run-test-content{
+    margin-left: 5%;
+}
+.run-btn{
+    float: right;
+    margin-bottom: 10%;
+    margin-top: 3%;
+    margin-right: 3%;
+    padding: 2%;
+    background-color: rgb(59, 86, 84);
+    border: none;
+    color: white;
+    box-shadow: 0px 1px 3px gray;
+}
+.run-btn:hover{
+    background-color: lightgray;
+    cursor: pointer;
+    color: black;
+}

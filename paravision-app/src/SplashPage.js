@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './first_one.css';
 import About from './about';
+import RunTest from './run';
 
 function SplashPage() {
   const [showAbout, setShowAbout] = useState(false);
+  const [showRunTest, setShowRunTest] = useState(false);
 
   const handleAboutClick = () => {
     setShowAbout(true);
@@ -11,6 +13,14 @@ function SplashPage() {
 
   const handleCloseAbout = () => {
     setShowAbout(false);
+  };
+
+  const handleRunTestClick = () => {
+    setShowRunTest(true);
+  };
+
+  const handleCloseRunTest = () => {
+    setShowRunTest(false);
   };
 
   useEffect(() => {
@@ -68,7 +78,7 @@ function SplashPage() {
           </svg></div>
         </div><hr />
         <div className='mid'>
-          <div className='left'>
+          <div className='left4'>
             <h1>Precision Diagnostics,Redefined</h1>
             <p> ParaVision offers cutting-edge tools for accurate and <br /> efficient cellular analysis, empowering you to make<br /> a confident decision </p>
             <button className='btn' onClick={handleAboutClick}>About App</button>
@@ -78,12 +88,14 @@ function SplashPage() {
           <h2>Core Functionalities</h2>
         </div>
         <div className="horizontal-layout">
-          <div className="item">
-            <h5><svg width="40" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d6efd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 3h6"></path>
-              <path d="M10 3v12a4 4 0 1 0 4 0V3"></path>
-              <line x1="9" y1="9" x2="15" y2="9"></line>
-            </svg><br />Run Test</h5><p>Initialize new tests with precision and speed</p>
+          <div className="run-test-button" onClick={handleRunTestClick}>
+            <div className="item">
+              <h5><svg width="40" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d6efd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 3h6"></path>
+                <path d="M10 3v12a4 4 0 1 0 4 0V3"></path>
+                <line x1="9" y1="9" x2="15" y2="9"></line>
+              </svg><br />Run Test</h5><p>Initialize new tests with precision and speed</p>
+            </div>
           </div>
           <div className="item"><svg width="44" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d6efd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="9" cy="7" r="4"></circle>
@@ -120,11 +132,18 @@ function SplashPage() {
         <div className='footer'>TeamABU2025/2026</div>
       </div>
       {showAbout && (
-        <div className="about-overlay" onClick={handleCloseAbout}>
-          <About onClose={handleCloseAbout} />
-        </div>
-      )}
-    </>
+  <div className="about-overlay" onClick={handleCloseAbout}>
+    <About onClose={handleCloseAbout} />
+  </div>
+)}
+
+{showRunTest && (
+  <div className="run-test-overlay-wrapper">
+    <RunTest onClose={handleCloseRunTest} />
+  </div>
+)}
+   
+    </> 
   );
 }
 

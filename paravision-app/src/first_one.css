@@ -173,7 +173,7 @@ body{
 }
 
 .item:hover {
-  transform: scale(1.05);
+  transform: scale(1.04);
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -199,4 +199,7 @@ body{
   padding-bottom: .3%;
   margin-top: .7%;
   font-size: 15px;
+}
+.toggle{
+  z-index: 1000;
 }

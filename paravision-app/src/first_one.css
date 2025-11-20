@@ -16,7 +16,7 @@ body{
     color: rgb(1, 41, 26);
 }
 #main{
-    font-size: 90px;
+    font-size: 80px;
     color: white;
     
 }
@@ -28,6 +28,8 @@ body{
 }
 .main{
     display: flex;
+    margin-top: 5%;
+    margin-left: 15%;
 }
 .a{
     color: white;
@@ -64,8 +66,10 @@ body{
 .words{
     margin-top: 2%;
     text-align: center;
-    margin-right: 20px;
+    margin-top: 7%;
+    margin-right: 10px;
     animation: move 2s ease-in-out;
+    width: 40%;
 }
 @keyframes move {
     0% { transform: translateY(-30px); opacity: 0; }
@@ -87,6 +91,103 @@ body{
 .loader-bar {
   width: 0%;
   height: 100%;
-  background-color: rgb(77, 8, 8);
+  background-color: rgb(1, 41, 26);;
   transition: width 0.5s ease-in-out;
+}
+
+.first {
+  padding-top: 1%;
+  opacity: 0;
+  left: 0;
+  top: 0;
+  transition: opacity 0.5s;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+.first.animate-in {
+  opacity: 1;
+}
+
+.splash-page {
+  transition: opacity 0.5s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2;
+}
+
+.splash-page.animate-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.logo {
+  transition: transform 0.5s ease-in-out;
+}
+
+.logo.animate-up {
+  transform: translateY(-100px);
+}
+.up{
+  display: flex;
+  gap: 88%;
+  padding-bottom: 1%;
+}
+.mid{
+  display: flex;
+  gap: 20%;
+  justify-content: center;
+  padding-top: 2%;
+  background-color: aliceblue;
+  padding-bottom: 2%;
+}
+.third{
+  padding-left: 5%;
+  padding-top: 1%;
+  color: white;
+}
+.horizontal-layout {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 1%;
+  margin-left: 2.5%;
+  margin-right: 2%;
+}
+
+.item {
+  background-color: aliceblue;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s ease-in-out;
+}
+
+.item:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.btn{
+  padding: 3%;
+  background-color: rgb(1, 41, 26);;
+  border: none;
+  color: white;
+  margin-left: 30%;
+}
+.right{
+  background-color: #017f72;
+  padding: 1%;
+}
+.footer{
+  background-color: aliceblue;
+  text-align: center;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin-top: 1.8%;
 }

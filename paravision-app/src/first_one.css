@@ -92,7 +92,7 @@ body{
 .loader-bar {
   width: 0%;
   height: 100%;
-  background-color: rgb(1, 41, 26);;
+  background-color: rgb(1, 41, 26);
   transition: width 0.5s ease-in-out;
 }
 
@@ -174,11 +174,11 @@ body{
 .item:hover {
   transform: scale(1.04);
   cursor: pointer;
-  border: 2px solid rgb(1, 41, 26);;
+  border: 2px solid rgb(1, 41, 26);
 }
 .btn{
   padding: 2%;
-  background-color: rgb(1, 41, 26);;
+  background-color:rgb(1, 41, 26);
   border: none;
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);

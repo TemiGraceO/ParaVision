@@ -203,3 +203,58 @@ body{
 .toggle{
   z-index: 1000;
 }
+.about-overlay {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.about-container {
+  width: 300px; /* Adjust the width as needed */
+  height: 100vh;
+  background-color: #fff;
+  animation: slideIn 0.3s ease-in-out;
+  padding: 20px;
+  z-index: 1000000;
+}
+
+.about-container.slide-out {
+  animation: slideOut 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+.btn2{
+  margin-left: 50%;
+}

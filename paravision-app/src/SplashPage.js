@@ -6,6 +6,7 @@ import RunTest from './run';
 function SplashPage() {
   const [showAbout, setShowAbout] = useState(false);
   const [showRunTest, setShowRunTest] = useState(false);
+  
 
   const handleAboutClick = () => {
     setShowAbout(true);

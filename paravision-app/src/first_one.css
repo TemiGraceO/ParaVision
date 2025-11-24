@@ -2,6 +2,10 @@
     margin: 0;
     padding: 0;
 }
+.image{
+  margin-left: -10%;
+  margin-top: 10%;
+}
 body{
     font-family:'Arial Narrow', Arial, sans-serif;
     background: url('./IMAGES/bg.png');
@@ -20,6 +24,16 @@ body{
     color: white;
     
 }
+.left h1{
+  font-size: 45px;
+}
+.left p{
+  font-family: 'Gabriola';
+  font-size: 15px;
+  text-align: justify;
+  width: 40%;
+  line-height: 17px;
+}
 .move{
     margin-top: 10%;
 }
@@ -33,35 +47,11 @@ body{
 }
 .a{
     color: white;
-    margin-top: -2%;
+    margin-top: 7%;
     margin-right: 30%;
     position: absolute;
     width: 100%;
     margin-left: -13%;
-}
-.particles{
-    animation: float 4s ease-in-out infinite;
-    margin-top: 20%;
-    z-index: 1000;
-    margin-left: 4%;
-    position: absolute;
-}
-@keyframes float {
-    0% {
-    transform: translateX(0px);
-  }
-  25% {
-    transform: translateX(-5px);
-  }
-  50% {
-    transform: translateX(5px);
-  }
-  75% {
-    transform: translateX(-5px);
-  }
-  100% {
-    transform: translateX(0px);
-  }
 }
 .words{
     margin-top: 2%;
@@ -70,6 +60,11 @@ body{
     margin-right: 10px;
     animation: move 2s ease-in-out;
     width: 40%;
+}
+.microscope{
+  border-radius: 30px;
+  padding-right: 20%;
+  margin-top: -8%;
 }
 @keyframes move {
     0% { transform: translateY(-30px); opacity: 0; }
@@ -133,7 +128,7 @@ body{
 
 .up{
   display: flex;
-  gap: 88%;
+  gap: 85%;
   padding-bottom: 1%;
 }
 .mid{
@@ -141,16 +136,22 @@ body{
   width: 100%;
   text-align: left;
   padding-top: 2%;
-  padding-left: 4%;
+  padding-left: 3%;
   background-color: aliceblue;
   padding-bottom: 2%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 .third{
-  padding-left: 2%;
-  padding-top: 1%;
+  padding-left: 3%;
+  padding-top: 2%;
   color:aliceblue;
   font-size: 15px;
+}
+.item h5{
+  color: #4fa5a7;
+}
+.item p{
+  color: #4fa5a7;
 }
 .horizontal-layout {
   display: grid;
@@ -167,24 +168,30 @@ body{
   text-align: center;
   border: 1px solid #ddd;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(232, 110, 110, 0.5);
+  box-shadow: 1px 6px 8px #367273;
   transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s ease-in-out;
 }
 
-.item:hover {
+.item:hover{
   transform: scale(1.04);
   cursor: pointer;
-  border: 2px solid rgb(1, 41, 26);
+  border: 2px solid rgb(8, 72, 48);
+  background-color: #4fa5a7;
+}
+.item:hover h5,
+.item:hover p {
+  color: white;
 }
 .btn{
-  padding: 2%;
-  background-color:#4fa5a7;
+  padding: 1%;
+  background-color:aliceblue;
   border: none;
-  color: white;
+  color: #4fa5a7;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   margin-top: 2%;
-  font-size: 70%;
+  font-size: 60%;
+  margin-top: -.1%;
 }
 .btn:hover{
   cursor: pointer;

@@ -1,6 +1,38 @@
 p{
     font-size: 80%;
-}.run-test-overlay {
+}
+.date{
+  width: 100%;
+  padding: 1%;
+}
+.modal{
+  background-color: #418384;
+  position: absolute;
+  width: 30%;
+  text-align: center;
+  color: white;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
+  margin-top: -20%;
+  margin-left: -.5%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.modal button{
+  padding: 2%;
+  padding-left:8% ;
+  padding-right: 8%;
+  background-color: aliceblue;
+  border: none;
+}
+.btn200{
+  display: flex;
+  gap: 10%;
+  margin-left: 30%;
+}
+.run-test-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,13 +43,27 @@ p{
   justify-content: center;
   align-items: center;
 }
-
+.smear{
+  font-size: 20px;
+}
+.lsmear{
+  font-size: 15px;
+}
+.left{
+  margin-right: 30%;
+}
+.left input{
+  border: 1px solid black;
+}
 .run-test-container {
   background-color: aliceblue;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
   width: 400px;
+  padding-right: 3%;
+  font-size: 20px;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .run-test-header {
@@ -64,18 +110,16 @@ p{
 }
 
 .run-btn {
-  background-color: #007bff;
+  background-color: #4fa5a7;
   color: #fff;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  float: right;
   margin-top: 5px;
 }
-
 .run-btn:hover {
-  background-color: #0056b3;
+  background-color: #418384;
 }
 
 input[type="radio"]:checked + label {

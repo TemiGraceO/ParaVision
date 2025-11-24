@@ -139,9 +139,9 @@ body{
 .mid{
   display: flex;
   width: 100%;
-  text-align: center;
-  justify-content: center;
+  text-align: left;
   padding-top: 2%;
+  padding-left: 4%;
   background-color: aliceblue;
   padding-bottom: 2%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -178,12 +178,13 @@ body{
 }
 .btn{
   padding: 2%;
-  background-color:rgb(1, 41, 26);
+  background-color:#4fa5a7;
   border: none;
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   margin-top: 2%;
+  font-size: 70%;
 }
 .btn:hover{
   cursor: pointer;
@@ -227,7 +228,26 @@ body{
 .about-container.slide-out {
   animation: slideOut 0.3s ease-in-out forwards;
 }
-
+.about{
+  margin-top: 8%;
+  list-style: none;
+  display: flex;
+  gap:50%;
+}
+.only{
+  list-style: none;
+  margin-left: 30%;
+  margin-top: 6%;
+}
+.explain{
+  margin-top: 15%;
+  background-color: #4fa5a7;
+  padding: 5%;
+  border-radius: 6%;
+  color: white;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
 @keyframes fadeIn {
   from {
     opacity: 0;

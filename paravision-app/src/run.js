@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import './run.css';
 
-const RunTest = ({ onClose }) => {
-  const [smearType, setSmearType] = useState('');
+const RunTest = () => {
+  const [showRunTest, setShowRunTest] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
+  const handleClose = () => setShowPrompt(true);
+  const handleNo = () => setShowPrompt(false);
+  const handleYes = () =>{
+    setShowPrompt(false);
+    window.close();
+  };
+
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
@@ -12,7 +20,6 @@ const RunTest = ({ onClose }) => {
     e.preventDefault();
     // Handle form submission here
     console.log({
-      smearType,
       name,
       age,
       gender,
@@ -24,47 +31,20 @@ const RunTest = ({ onClose }) => {
     <div className="run-test-overlay">
       <div className="run-test-container">
         <header className="run-test-header">
-          <h2>Run Test</h2>
-          <button className="close-button" onClick={onClose}>
+          <h4>Add Patient's Demographics</h4>
+          <button className="close-button" onClick={handleClose}>
             ×
           </button>
         </header>
         <hr />
         <main className="run-test-content">
           <form onSubmit={handleSubmit}>
-            <p className="smear">Select Smear Type:</p>
-            <div className="options">
-              <div className="left">
-                <input
-                  type="radio"
-                  id="thin"
-                  name="smearType"
-                  value="thin"
-                  checked={smearType === 'thin'}
-                  onChange={(e) => setSmearType(e.target.value)}
-                />
-                <label htmlFor="thin">Thin</label>
-              </div>
-              <div className="right">
-                <input
-                  type="radio"
-                  id="thick"
-                  name="smearType"
-                  value="thick"
-                  checked={smearType === 'thick'}
-                  onChange={(e) => setSmearType(e.target.value)}
-                />
-                <label htmlFor="thick">Thick</label>
-              </div>
-            </div>
-            <br />
-            <h5>Patient Demographics:</h5>
             <div className="form-group">
-              <label htmlFor="name">Name</label>
+              <label htmlFor="name" className='lsmear'>Name:</label>
               <input
                 id="name"
                 type="text"
-                placeholder="Enter Full name"
+                placeholder="Enter Patient's Full name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -72,7 +52,7 @@ const RunTest = ({ onClose }) => {
             </div>
             <div className="two">
               <div className="form-group">
-                <label htmlFor="age">Age</label>
+                <label htmlFor="age" className='lsmear'>Age:</label>
                 <input
                   id="age"
                   type="number"
@@ -83,7 +63,7 @@ const RunTest = ({ onClose }) => {
                 />
               </div>
               <div className="form-group" id='gender'>
-                <label htmlFor="gender">Gender</label>
+                <label htmlFor="gender" style={{paddingLeft:20}} className='lsmear'>Gender:</label>
                 <select
                   id="gender"
                   value={gender}
@@ -98,22 +78,32 @@ const RunTest = ({ onClose }) => {
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="patientId">Patient ID</label>
+              <label htmlFor="patientId" className='lsmear'>ID:</label>
               <input
                 id="patientId"
                 type="text"
-                placeholder="Enter Patient ID"
+                placeholder="Enter Patient's ID"
                 value={patientId}
                 onChange={(e) => setPatientId(e.target.value)}
                 required
               />
             </div>
+            <label htmlFor="date"className='lsmear'>Date of entry:</label><br/><input type='date' className='date'></input><br/><br/>
             <hr />
+            <div className='btn100'>
             <button className="run-btn" type="submit">
-              Run Test
-            </button>
+              Add to record
+            </button></div>
           </form>
         </main>
+        {showPrompt && (
+          <div className='modal'>
+            <p>Are You Sure You want to quit? Inputs won't be saved</p>
+            <div className='btn200'>
+            <button onClick={handleYes} >Yes</button>
+            <button onClick={handleNo}>No</button></div>
+            </div>
+        )}
       </div>
     </div>
   );

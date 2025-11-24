@@ -73,8 +73,8 @@ const handleClosePatientClick = () => {
           </div>
         </div>
         <div>
-          <img className='image' src="paravision.png" alt="Microscope" style={{ width: '60%'}} /><br/><br/><br/>
-          <div className="a"><h5>TeamABU 2025/2026</h5></div>
+          <img className='image' src="paravision.png" alt="Microscope" style={{ width: '70%'}} /><br/>
+          <div className="a"><h5>TeamABU@2025/2026</h5></div>
         </div>
         <div className="next-interface"> </div>
       </div>
@@ -117,26 +117,8 @@ const handleClosePatientClick = () => {
             <line x1="12" y1="12" x2="15" y2="15"></line>
           </svg> <br />Review History</h5><p>Access past test results of patients</p></div>
           
-          <div className="item"><h5><svg width="48" height="30" viewBox="0 0 24 24" fill="none" stroke="#143d3eff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="4" y1="20" x2="4" y2="10"></line>
-            <line x1="10" y1="20" x2="10" y2="4"></line>
-            <line x1="16" y1="20" x2="16" y2="14"></line>
-            <polyline points="3 6 10 12 16 8 21 14"></polyline>
-          </svg><br />Data Analytics</h5><p>Visualize trends and gain statistical insights</p></div>
-          <div className="item"><h5><svg width="48" height="30" viewBox="0 0 24 24" fill="none" stroke="#143d3eff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="4" y1="20" x2="4" y2="10"></line>
-            <line x1="10" y1="20" x2="10" y2="4"></line>
-            <line x1="16" y1="20" x2="16" y2="14"></line>
-            <polyline points="3 6 10 12 16 8 21 14"></polyline>
-          </svg><br />Data Analytics</h5><p>Visualize trends and gain statistical insights</p></div>
-                    <div className="item"><h5><svg width="48" height="30" viewBox="0 0 24 24" fill="none" stroke="#143d3eff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="4" y1="20" x2="4" y2="10"></line>
-            <line x1="10" y1="20" x2="10" y2="4"></line>
-            <line x1="16" y1="20" x2="16" y2="14"></line>
-            <polyline points="3 6 10 12 16 8 21 14"></polyline>
-          </svg><br />Data Analytics</h5><p>Visualize trends and gain statistical insights</p></div>
         </div>
-        <div className='footer'>TeamABU2025/2026</div>
+        <div className='footer'>TeamABU@2025/2026</div>
       </div>
       {showAbout && (
   <div className="about-overlay">

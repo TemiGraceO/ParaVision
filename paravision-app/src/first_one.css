@@ -2,31 +2,20 @@
     margin: 0;
     padding: 0;
 }
-.image{
-  margin-left: -20%;
-  margin-top: 10%;
-}
 body{
     font-family:'Arial Narrow', Arial, sans-serif;
     background: url('./IMAGES/bg.png');
     background-size: cover;
+    background-position: center;
     overflow:hidden ;
-    display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 7%;
     font-size: 20px;
-    margin-right: 5%;
     color: rgb(1, 41, 26);
+    min-height: 100vh;
+    width: 100%;
 }
-#main{
-    font-size: 70px;
-    color: white;
-    
-}
-.left{
-  padding-bottom: 3%;
-}
+
 .left h1{
   font-size: 45px;
 }
@@ -37,37 +26,28 @@ body{
   width: 40%;
   line-height: 17px;
 }
-.move{
-    margin-top: 10%;
+#main{
+  color: aliceblue;
+  font-size: 70px;
+}
+footer{
+  margin-top: 3.5%;
+  text-align: center;
+  color: black;
+  padding: 1rem;
+  font-size: 11px;
+  background-color: rgb(210, 222, 233);
 }
 .down{
-    font-size: 20px;
-}
-.main{
-    display: flex;
-    margin-top: 5%;
-    margin-left: 15%;
-}
-.a{
-    color: white;
-    margin-top: 7%;
-    margin-right: 30%;
-    position: absolute;
-    width: 100%;
-    margin-left: -9%;
+  color: aliceblue;
+  font-size: 30px;
 }
 .words{
-    margin-top: 2%;
-    text-align: center;
-    margin-top: 7%;
-    margin-right: 10px;
     animation: move 2s ease-in-out;
-    width: 40%;
+    padding-left: 3%;
 }
-.microscope{
-  border-radius: 30px;
-  padding-right: 20%;
-  margin-top: -8%;
+.only{
+  color: black;
 }
 @keyframes move {
     0% { transform: translateY(-30px); opacity: 0; }
@@ -79,8 +59,6 @@ body{
   border-radius: 5px;
   overflow: hidden;
   animation: slide 1s ease-in-out;
-  margin-left: 20%;
-
 }
 
 @keyframes slide {
@@ -110,13 +88,16 @@ body{
 }
 
 .splash-page {
+  display: flex;
+  gap: -2%;
   transition: opacity 0.5s;
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100vh;
-  z-index: 2;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding-left: 5.5%;
+  padding-right: 5.5%;
+  margin-top: 8.5%;
 }
 
 .splash-page.animate-out {
@@ -124,15 +105,16 @@ body{
   pointer-events: none;
 }
 
-.logo {
-  transition: transform 0.5s ease-in-out;
-}
+
+
 
 
 .up{
   display: flex;
-  gap: 86%;
+  justify-content: center;
+  align-items: center;
   padding-bottom: 1%;
+  gap:86%;
 }
 .mid{
   display: flex;
@@ -140,7 +122,7 @@ body{
   text-align: left;
   padding-top: 2%;
   padding-left: 3%;
-  background-color: aliceblue;
+  background-color: rgb(210, 222, 233);
   padding-bottom: 2%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -151,10 +133,11 @@ body{
   font-size: 15px;
 }
 .item h5{
-  color: #4fa5a7;
+  color: aliceblue;
+  font-weight: 500;
 }
 .item p{
-  color: #4fa5a7;
+  color:rgb(210, 222, 233);
 }
 .horizontal-layout {
   display: grid;
@@ -162,28 +145,29 @@ body{
   gap: 20px;
   margin-top: 1%;
   margin-left: 2.5%;
-  margin-right: 2%;
+  margin-right: 2.5%;
 }
 
 .item {
-  background-color: aliceblue;
+  background-color: #4fa5a7;
   padding-top: 5%;
-  padding-bottom: 15%;
   text-align: center;
   border-radius: 10px;
+  padding-bottom: 10%;
   box-shadow: 1px 6px 8px #367273;
   transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s ease-in-out;
 }
 
 .item:hover{
+  background-color: rgb(203, 210, 216);
   transform: scale(1.04);
   cursor: pointer;
   border: 1px solid aliceblue;
-  background-color: #4fa5a7;
+
 }
 .item:hover h5,
 .item:hover p {
-  color: white;
+  color: #367273;
 }
 .btn{
   padding: 1%;
@@ -195,22 +179,26 @@ body{
   margin-top: 2%;
   font-size: 60%;
   margin-top: -.1%;
+  border: 1px solid #4fa5a7;
 }
 .btn:hover{
   cursor: pointer;
   transform: scale(1.05);
+  background-color: #4fa5a7;
+  color: aliceblue;
   transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s ease-in-out;
 }
-
-.footer{
-  color: aliceblue;
-  text-align: center;
-  padding-top: .3%;
-  padding-bottom: .3%;
-  margin-top: 8%;
-  font-size: 15px;
-  margin-left: 3%;
-  font-size: 15px;
+.btn1{
+  padding: 2% 6%;
+  margin-top: 6%;
+  background-color: #438a8b;
+  border: none;
+  border-radius: 4px;
+  color: rgb(205, 213, 219);
+}
+.btn1:hover{
+  background-color: #367273;
+  cursor: pointer;
 }
 .toggle{
   z-index: 1000;
@@ -229,37 +217,25 @@ body{
 }
 
 .about-container {
-  width: 300px;
-  height: 100vh;
+  width: 30%;
   background-color: aliceblue;
   animation: slideIn 0.3s ease-in-out;
   padding: 20px;
   z-index: 1000000;
+  height: 100vh;
 }
 
 .about-container.slide-out {
   animation: slideOut 0.3s ease-in-out forwards;
 }
 .about{
-  margin-top: 8%;
-  list-style: none;
-  display: flex;
-  gap:50%;
+  list-style: disc;
+  margin-bottom: 10%;
+  margin-top: 4%;
+  color: #4fa5a7;
+  padding-left: 5%;
 }
-.only{
-  list-style: none;
-  margin-left: 30%;
-  margin-top: 6%;
-}
-.explain{
-  margin-top: 15%;
-  background-color: #4fa5a7;
-  padding: 5%;
-  border-radius: 6%;
-  color: white;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

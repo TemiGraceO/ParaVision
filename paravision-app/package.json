@@ -10,7 +10,9 @@
     "@testing-library/user-event": "^13.5.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.6",
     "react-scripts": "5.0.1",
+    "sweetalert2": "^11.26.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -47,17 +49,14 @@
     "wait-on": "^7.2.0"
   },
   "build": {
-    "appId": "com.paravision.app",
-    "productName": "Paravision",
-    "directories": {
-      "buildResources": "public"
-    },
+    "appId": "com.example.app",
+    "productName": "MyApp",
     "files": [
       "build/**/*",
       "main.js"
     ],
-    "win": {
-      "target": "nsis"
+    "directories": {
+      "buildResources": "assets"
     }
   }
 }

@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import './run.css';
+import Prompt from './prompt';
 
-const RunTest = () => {
-  const [showRunTest, setShowRunTest] = useState(false);
+const RunTest = ({ onClose, closeAll }) => {
   const [showPrompt, setShowPrompt] = useState(false);
-  const handleClose = () => setShowPrompt(true);
-  const handleNo = () => setShowPrompt(false);
-  const handleYes = () =>{
-    setShowPrompt(false);
-    window.close();
-  };
+  const handlePrompt = () => setShowPrompt(true);
+  const handleClosePrompt = () => setShowPrompt(false);
 
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
@@ -18,13 +14,7 @@ const RunTest = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log({
-      name,
-      age,
-      gender,
-      patientId,
-    });
+    console.log({ name, age, gender, patientId });
   };
 
   return (
@@ -32,9 +22,7 @@ const RunTest = () => {
       <div className="run-test-container">
         <header className="run-test-header">
           <h4>Add Patient's Demographics</h4>
-          <button className="close-button" onClick={handleClose}>
-            ×
-          </button>
+          <button className="close-button" onClick={handlePrompt}>×</button>
         </header>
         <hr />
         <main className="run-test-content">
@@ -97,12 +85,10 @@ const RunTest = () => {
           </form>
         </main>
         {showPrompt && (
-          <div className='modal'>
-            <p>Are You Sure You want to quit? Inputs won't be saved</p>
-            <div className='btn200'>
-            <button onClick={handleYes} >Yes</button>
-            <button onClick={handleNo}>No</button></div>
-            </div>
+          <Prompt 
+            onClose={handleClosePrompt} 
+            closeRunTest={closeAll} // 👈 Pass "closeAll" to Prompt
+          />
         )}
       </div>
     </div>

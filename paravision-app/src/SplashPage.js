@@ -58,11 +58,11 @@ const handleClosePatientClick = () => {
 
   return (
     <>
-      <div className='splash-page main'>
+      <div className='splash-page'>
         <div className="words">
           <h1 className='move'>
             <div className="logo">
-              <img src='logo2.png' alt='paravision logo' style={{ width: '15%' }} />
+              <img src='logo2.png' alt='paravision logo' style={{ width: '10%' }} />
               <span id="main">ParaVision</span>
             </div>
             <span className="down">Empowering Precision Diagnostics</span>
@@ -74,13 +74,15 @@ const handleClosePatientClick = () => {
         </div>
         <div>
           <img className='image' src="paravision.png" alt="Microscope" style={{ width: '70%'}} /><br/>
-          <div className="a"><h5>TeamABU@2025/2026</h5></div>
         </div>
         <div className="next-interface"> </div>
-      </div>
+      </div><br/><br></br><div><footer>TeamABU@2025/2026</footer></div>
+
+
+
       <div className='first'>
         <div className='up'>
-          <img src='logo2.png' alt='logo' style={{ width: '3%', marginLeft: '3%', zIndex:'10000'}} />
+          <img src='logo2.png' alt='logo' style={{ width: '3%', zIndex:'10000'}} />
            <button className='btn' onClick={handleAboutClick}>About App</button>
         </div><hr />
         <div className='mid'>
@@ -101,24 +103,26 @@ const handleClosePatientClick = () => {
             <line x1="16" y1="10" x2="22" y2="10"></line>
             <line x1="16" y1="14" x2="22" y2="14"></line>
             <line x1="16" y1="18" x2="22" y2="18"></line>
-          </svg> <br /><h5>Patients Management</h5><p>Easily view, add and merge patients records</p></div>
+          </svg> <br /><h5>Patients Management</h5><p>Easily view, add and merge patients records</p>
+          <button className='btn1'>Manage Patients</button></div>
         
-          <div className="item"><h5><svg width="48" height="30" viewBox="0 0 24 24" fill="none" stroke="#143d3eff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="item"><h5><svg width="48" height="30" viewBox="0 0 24 24" fill="none" stroke="rgb(55, 113, 114)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="4" y1="20" x2="4" y2="10"></line>
             <line x1="10" y1="20" x2="10" y2="4"></line>
             <line x1="16" y1="20" x2="16" y2="14"></line>
             <polyline points="3 6 10 12 16 8 21 14"></polyline>
-          </svg><br/>Data Analytics</h5><p>Visualize trends and gain statistical insights</p></div>
+          </svg><br/>Data Analytics</h5><p>Visualize trends and gain statistical insights</p>
+          <button className='btn1'>Manage Patients</button></div>
 
             <div className="item"><h5><svg width="40" height="30" viewBox="0 0 24 24" fill="none" stroke="#143d3eff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="1 4 1 10 7 10"></polyline>
             <path d="M3.51 15a9 9 0 1 0 .49-9"></path>
             <line x1="12" y1="7" x2="12" y2="12"></line>
             <line x1="12" y1="12" x2="15" y2="15"></line>
-          </svg> <br />Review History</h5><p>Access past test results of patients</p></div>
+          </svg> <br />Review History</h5><p>Access past test results of patients</p>
+          <button className='btn1'>Manage Patients</button></div>
           
         </div>
-        <div className='footer'>TeamABU@2025/2026</div>
       </div>
       {showAbout && (
   <div className="about-overlay">

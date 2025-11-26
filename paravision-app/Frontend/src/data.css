@@ -1,0 +1,26 @@
+.data-overlay {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.data-container {
+  width: 70%;
+  background-color: aliceblue;
+  animation: slideIn 0.3s ease-in-out;
+  padding: 20px;
+  height: 100vh;
+  box-shadow: 30px 10px 30px rgba(0, 0, 0, 0.5);
+  border-left: 2px solid #4fa5a7;
+}
+
+.data{
+    margin-bottom: 1%;
+}

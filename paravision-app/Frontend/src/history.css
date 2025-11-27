@@ -1,26 +1,154 @@
-.history-overlay {
+.history-modal-overlay {
   position: fixed;
   z-index: 1000;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: flex-end;
-  animation: fadeIn 0.3s ease-in-out;
+  animation: hm-fadeIn 0.3s ease-in-out;
+  backdrop-filter: blur(2px);
 }
 
-.history-container {
-  width: 40%;
-  background-color: aliceblue;
-  animation: slideIn 0.3s ease-in-out;
-  padding: 20px;
+.history-modal-content {
+  width: 80%;
+  max-width: 90%;
+  background-color: #f8f9fa;
+  animation: hm-slideIn 0.3s ease-in-out;
+  padding: 24px;
   height: 100vh;
-  box-shadow: 30px 10px 30px rgba(0, 0, 0, 0.5);
-  border-left: 2px solid #4fa5a7;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.2);
+  border-left: 3px solid #4fa5a7;
+  overflow-y: auto;
 }
 
-.data{
-    margin-bottom: 1%;
+.hm-title {
+  margin-bottom: 8px;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.hm-subtitle {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.hm-filters {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.hm-search-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+.hm-filter-select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  min-width: 120px;
+}
+
+.hm-filter-btn {
+  padding: 8px 16px;
+  background: #4fa5a7;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.hm-filter-btn:hover {
+  background: #357a7c;
+}
+
+.hm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.6em;
+}
+
+.hm-table th, .hm-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.hm-table th {
+  background: #4fa5a7;
+  color: #fff;
+}
+
+.hm-status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.hm-status.processed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.hm-status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.hm-action-btn {
+  margin: 0 4px;
+  padding: 6px 10px;
+  background: #4fa5a7;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.hm-action-btn:hover {
+  background: #357a7c;
+}
+
+.hm-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #666;
+}
+
+.hm-close-btn:hover {
+  color: #f44336;
+}
+
+@keyframes hm-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes hm-slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes hm-slideOut {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+.hm-slide-out {
+  animation: hm-slideOut 0.3s ease-in-out forwards;
 }

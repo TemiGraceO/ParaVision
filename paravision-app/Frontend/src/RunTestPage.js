@@ -5,6 +5,8 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
   const [testType, setTestType] = useState('');
   const [bloodSubType, setBloodSubType] = useState('');
   const [stoolMethod, setStoolMethod] = useState('');
+  const [bloodCameraId, setBloodCameraId] = useState('');
+  const [stoolCameraId, setStoolCameraId] = useState('');
   const [isScanning, setIsScanning] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
   const [cameras, setCameras] = useState([]);
@@ -15,43 +17,52 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
   const isActive = (section) => testType === 'both' || testType === section;
 
   useEffect(() => {
-    if (testType === 'both') {
+    if (testType === 'both' || testType === 'blood' || testType === 'stool') {
       navigator.mediaDevices.enumerateDevices().then(devices => {
         const videoDevices = devices.filter(d => d.kind === 'videoinput');
         setCameras(videoDevices);
-        if (videoDevices.length < 2) alert("⚠️ Plug in 2 cameras for Blood + Stool!");
-      });
+        if (videoDevices.length < 2 && testType === 'both') {
+          alert("⚠️ Need 2 cameras for Blood + Stool!");
+        }
+        if (testType === 'stool') {
+          setStoolCameraId(videoDevices[0]?.deviceId || '');
+        }
+        if (testType === 'blood') {
+          setBloodCameraId(videoDevices[2]?.deviceId || '');
+        }
+        if (testType === 'both') {
+          setBloodCameraId(videoDevices[2]?.deviceId || '');
+          setStoolCameraId(videoDevices[0]?.deviceId || '');
+        }
+      }).catch(err => console.error('Error listing cameras:', err));
     }
   }, [testType]);
 
-const openCamera = async () => {
-  if (testType === 'both' && cameras.length < 2) {
-    return alert("Add 2 cameras!");
-  }
-  setShowCamera(true);
-  try {
-    if (testType === 'both') {
-      // 👇 Use separate constraints for each camera
-      const bloodStream = await navigator.mediaDevices.getUserMedia({
-        video: { deviceId: { exact: cameras[0].deviceId } }
-      });
-      const stoolStream = await navigator.mediaDevices.getUserMedia({
-        video: { deviceId: { exact: cameras[2].deviceId } }
-      });
-      bloodVideoRef.current.srcObject = bloodStream;
-      stoolVideoRef.current.srcObject = stoolStream;
-      bloodVideoRef.current.play();
-      stoolVideoRef.current.play();
-    } else {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      bloodVideoRef.current.srcObject = stream;
-      bloodVideoRef.current.play();
+  const openCamera = async () => {
+    if (testType === 'both' && cameras.length < 2) return alert("Add 2 cameras!");
+    setShowCamera(true);
+    try {
+      if (testType === 'both') {
+        const bloodStream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: bloodCameraId } } });
+        const stoolStream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: stoolCameraId } } });
+        bloodVideoRef.current.srcObject = bloodStream;
+        stoolVideoRef.current.srcObject = stoolStream;
+        bloodVideoRef.current.play();
+        stoolVideoRef.current.play();
+      } else if (testType === 'blood') {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: bloodCameraId } } });
+        bloodVideoRef.current.srcObject = stream;
+        bloodVideoRef.current.play();
+      } else if (testType === 'stool') {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: stoolCameraId } } });
+        bloodVideoRef.current.srcObject = stream;
+        bloodVideoRef.current.play();
+      }
+    } catch (err) {
+      alert("Camera error! 😕");
+      console.error(err);
     }
-  } catch (err) {
-    alert("Camera error! Check permissions?");
-    console.error(err);
-  }
-};
+  };
 
   const stopCamera = () => {
     [bloodVideoRef, stoolVideoRef].forEach(ref => {
@@ -113,39 +124,40 @@ const openCamera = async () => {
           </>
         ) : showCamera ? (
           <div className="camera-modal">
-            <header><h4>Live Capture</h4><button onClick={stopCamera}>×</button></header>
+            <header><h4>📸 Live Capture</h4><button onClick={stopCamera}>×</button></header>
             <div className="modal-body">
-  {testType === 'both' ? (
-    <div className="dual-feed">
-      <video ref={bloodVideoRef} className="feed" autoPlay playsInline />
-      <video ref={stoolVideoRef} className="feed" autoPlay playsInline />
+              {testType === 'both' ? (
+                <div className="dual-feed">
+                    
+                  <video ref={bloodVideoRef} className="feed" autoPlay playsInline />
+                  <video ref={stoolVideoRef} className="feed" autoPlay playsInline />
+                </div>
+              ) : (
+                <video ref={bloodVideoRef} className="camera-feed" autoPlay playsInline />
+              )}
+              <canvas ref={canvasRef} style={{ display: 'none' }} />
+            </div>
+            <footer className="modal-footer">
+              <button className="btn-close" onClick={stopCamera}>Close</button>
+              <button className="capture-btn">Capture Frame</button>
+            </footer>
+          </div>
+        ) : (
+          <div className="scan-modal">
+            <header><h4>🔬 Test in Progress...</h4></header>
+            <div className="modal-body">
+              <p>Analyzing {testType} sample...</p>
+              <div className="loader"></div>
+              <button className="live-capture-btn" onClick={openCamera}>View Live Capture</button>
+            </div>
+            <footer>
+              <button className="btn-close" onClick={handleCancel}>Cancel</button>
+            </footer>
+          </div>
+        )}
+      </div>
     </div>
-  ) : (
-    <video ref={bloodVideoRef} className="camera-feed" autoPlay playsInline />
-  )}
-  <canvas ref={canvasRef} style={{ display: 'none' }} />
-</div>
-<footer className="modal-footer">
-  <button className="btn-close" onClick={stopCamera}>Close</button>
-  <button className="capture-btn">Capture Frame</button>
-</footer>
-</div>
-) : (
-<div className="scan-modal">
-  <header><h4>🔬 Test in Progress...</h4></header>
-  <div className="modal-body">
-    <p>Analyzing {testType} sample...</p>
-    <div className="loader"></div>
-    <button className="live-capture-btn" onClick={openCamera}>📸 View Live Capture</button>
-  </div>
-  <footer>
-    <button className="btn-close" onClick={handleCancel}>Cancel</button>
-  </footer>
-</div>
-)}
-</div>
-</div>
-);
+  );
 };
 
 export default RunTestPage;

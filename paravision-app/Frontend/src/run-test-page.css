@@ -4,19 +4,19 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.6); /* Slightly darker */
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  backdrop-filter: blur(2px); /* subtle blur */
+  backdrop-filter: blur(2px);
 }
 
 .modal-content {
   background: #fff;
   padding: 24px;
-  border-radius: 12px; /* Softer edges */
-  width: 400px;
+  border-radius: 12px;
+  width: 800px; /* 👉 Wider for camera feeds */
   max-width: 90%;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
@@ -34,6 +34,10 @@
   color: #333;
 }
 
+.modal-body {
+  width: 100%;
+}
+
 .close-btn {
   background: none;
   border: none;
@@ -41,142 +45,36 @@
   cursor: pointer;
   color: #666;
 }
+
 .close-btn:hover {
   color: #f44336;
 }
 
-.test-options {
-  margin: 20px 0;
-}
-
-.test-options label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: #555;
-}
-
-.test-options select {
-  width: 100%;
-  padding: 8px 12px;
-  margin-bottom: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 1em;
-}
-
-.sub-option {
-  margin-left: 16px;
-  margin-top: 8px;
-}
-
-.start-test-btn {
-  padding: 10px 20px;
-  background: #4fa5a7;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: 0.2s;
-  width: 100%;
-}
-.start-test-btn:hover {
-  background: #357a7c;
-}
-.start-test-btn:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
-.modal-footer {
-  margin-top: 20px;
-  text-align: right;
-}
-
-.btn-close {
-  padding: 8px 16px;
-  background: #e0e0e0;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.btn-close:hover {
-  background: #d5d5d5;
-}
-.option-group {
-  margin: 12px 0;
-  transition: 0.2s;
-}
-
-.option-group.disabled {
-  opacity: 0.5;
-  pointer-events: none; /* makes it non-clickable */
-}
-
-.option-group label {
-  display: block;
-  margin-bottom: 4px;
-  font-weight: 500;
-  color: #555;
-}
-
-.option-group select {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 1em;
-}
-.scan-modal {
-  text-align: center;
-  padding: 20px;
-}
-
-.loader {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #4fa5a7;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin: 20px auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.live-capture-btn {
-  margin-top: 20px;
-  padding: 10px 16px;
-  background: #4fa5a7;
-  color:  #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1em;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.live-capture-btn:hover {
-  background: #357a7a;
-}
 .camera-modal {
   text-align: center;
 }
 
 .camera-body {
-  padding: 10px;
+  padding: 20px; /* 👉 More padding */
+}
+
+.dual-feed {
   display: flex;
-  justify-content: center;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+.feed {
+  width: 49%;
+  height: 350px; /* 👉 Taller videos */
+  border: 2px solid #4fa5a7;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 .camera-feed {
   width: 100%;
-  max-width: 320px;
+  max-height: 400px; /* 👉 Bigger single feed */
   border: 3px solid #4fa5a7;
   border-radius: 8px;
   aspect-ratio: 4/3;
@@ -192,34 +90,21 @@
   border-radius: 6px;
   cursor: pointer;
 }
+
 .capture-btn:hover {
   background: #357a7a;
 }
-.dual-feed {
-  display: flex; gap: 10px;
-  width: 200%;
-}
-.feed {
-  width: 48%; border: 1px solid #ddd; border-radius: 4px;
-}
-.dual-feed {
-  display: flex;
-  gap: 10px;
-}
-.feed {
-  width: 48%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+
 .loader {
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
+  border-top: 4px solid #4fa5a7;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin: 10px auto;
+  margin: 20px auto;
 }
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

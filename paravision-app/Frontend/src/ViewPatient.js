@@ -16,7 +16,7 @@ const ViewPatient = ({ patient, onClose, captures = [] }) => {
           <p><b>Gender:</b> {patient.gender}</p>
           <p><b>Date of Entry:</b> {new Date().toLocaleDateString()}</p>
 
-          <h5>🔬 Test Captures:</h5>
+          <h5>Test Captures:</h5>
           {captures.length === 0 ? (
             <p>No images captured yet.</p>
           ) : (

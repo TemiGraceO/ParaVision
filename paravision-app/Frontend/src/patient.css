@@ -4,39 +4,109 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.patient-container {
-  background-color: aliceblue;
+  z-index: 1000;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
-  width: 50%;
-  padding-right: 3%;
-  font-size: 20px;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
 }
-.search{
-    width: 59%;
-    padding: .5%;
-    margin-top: 1%;
+
+.patient-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  height: 80%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-.add{
-    display: flex;
-    gap: 30%;
+
+.folder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive */
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.folder-card {
+  background: #f9f9f9;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.folder-icon {
+  font-size: .8em;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+  word-break: break-word; /* Prevent long IDs from overflowing */
+}
+#color{
+  color: #4fa5a7;
+}
+.folder-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap; /* Wrap buttons if space is tight */
+}
+
+.action-btn {
+  padding: 4px 8px;
+  font-size: 0.9em;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+}
+.action-btn:hover {
+  background: #e0e0e0;
+}
+
+.add {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  margin-top: 1%;
 }
 .add1{
-    background-color: #4fa5a7;
-    padding: 1% 2%;
-    border: none;
-    color: white;
-    border-radius:10px ;
-    margin-top: 1%;
+  background-color: #4fa5a7;
+  color: white;
 }
 .add1:hover{
-    background-color: #2d595a;
-    cursor: pointer;
+  background-color: #3b7c7d;
+}
+.option{
+  display: flex;
+}
+#del{
+  float: right;
+}
+#run{
+  font-size: 15px;
+}
+#view{
+  font-size: 15px;
+  margin-right: 15px;
+}
+.search{
+  width: 64.5999%;
+}
+.search-btn{
+  background-color: #4fa5a7;
+  color: white;
+}
+.search-btn:hover{
+  background-color: #3b7c7d;
+}
+.num{
+  top: 0;
 }

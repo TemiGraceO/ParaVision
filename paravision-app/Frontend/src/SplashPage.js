@@ -4,6 +4,7 @@ import About from './about';
 import RunTest from './run';
 import Patient from './patient';
 import Data from './data';
+import History from './history';
 
 function SplashPage() {
   const [showHistory, setShowHistory] = useState(false);
@@ -13,11 +14,11 @@ function SplashPage() {
   const [showPatient, setShowPatient] = useState(false);
 
   const handleHistoryClick = () => {
-    setShowData(true);
+    setShowHistory(true);
   };
 
   const handleCloseHistory = () => {
-    setShowData(false);
+    setShowHistory(false); 
   };
 
   const handleDataClick = () => {
@@ -99,7 +100,7 @@ const handleClosePatientClick = () => {
       <div className='first'>
         <div className='up'>
           <img src='logo2.png' alt='logo' style={{ width: '3%', zIndex:'10000'}} />
-           <button className='btn' onClick={handleAboutClick}>About App</button>
+           <button className='btna' onClick={handleAboutClick}>About App</button>
         </div><hr />
         <div className='mid'>
           <div className='left'>
@@ -162,8 +163,8 @@ const handleClosePatientClick = () => {
   </div>
 )}
 {showHistory && (
-  <div className="data-overlay">
-    <Data onClose={handleCloseHistory} />
+  <div className="history-overlay">
+    <History onClose={handleCloseHistory} />
   </div>
 )}
    

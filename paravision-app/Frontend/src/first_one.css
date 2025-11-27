@@ -31,7 +31,7 @@ body{
   font-size: 70px;
 }
 footer{
-  margin-top: 3.5%;
+  margin-top: 4.5%;
   text-align: center;
   color: black;
   padding: 1rem;
@@ -174,7 +174,7 @@ footer{
 .item:hover p {
   color:rgb(210, 222, 233);
 }
-.btn{
+.btna{
   padding: 1%;
   background-color: rgb(210, 222, 233);
   border: none;
@@ -182,7 +182,7 @@ footer{
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   margin-top: 2%;
-  font-size: 60%;
+  font-size: 90%;
   margin-top: -.1%;
   border: 1px solid #4fa5a7;
 }
@@ -204,6 +204,7 @@ footer{
 .btn1:hover{
   background-color: #367273;
   cursor: pointer;
+  
 }
 .toggle{
   z-index: 1000;
@@ -269,7 +270,7 @@ footer{
 }
 .btn2{
   margin-left: 95%;
-  margin-top: -10%;
+  margin-top: -4%;
   background-color: transparent;
   color: black;
   border: none;

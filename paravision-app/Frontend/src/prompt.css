@@ -35,3 +35,9 @@ button:hover{
     background-color: rgb(198, 203, 207);
     cursor: pointer;
 }
+.red{
+  background-color: rgb(235, 55, 55);
+}
+.red:hover{
+  background-color: rgb(220, 132, 132);
+}

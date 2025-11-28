@@ -11,7 +11,7 @@ const ViewPatient = ({ patient, onClose }) => {
           <div className="head-id">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#4fa5a7">
                 <path d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 13a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
-              </svg> View - id: {patient.id}
+              </svg> Patient's details - id: {patient.id}
           </div>
           <button className="close-x" onClick={onClose}>✕</button>
         </div>

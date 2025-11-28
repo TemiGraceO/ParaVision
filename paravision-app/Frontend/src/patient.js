@@ -3,7 +3,7 @@ import './patient.css';
 import RunTest from './run';
 import ViewPatient from './ViewPatient';
 import RunTestPage from './RunTestPage';
-import Prompt from './prompt';
+import Prompt2 from './prompt';
 
 const Patient = ({ onClose }) => {
   const [patients, setPatients] = useState([]);
@@ -32,11 +32,12 @@ const Patient = ({ onClose }) => {
   };
 
   const handleSearch = () => {
-    const filtered = patients.filter(p =>
-      p.id.toLowerCase().includes(searchId.toLowerCase())
-    );
-    setFilteredPatients(filtered);
-  };
+  const filtered = patients.filter(p =>
+    (p.id && p.id.toLowerCase().includes(searchId.toLowerCase())) ||
+    (p.name && p.name.toLowerCase().includes(searchId.toLowerCase()))
+  );
+  setFilteredPatients(filtered);
+};
 
   const handleView = (patient) => {
     setSelectedPatient(patient);
@@ -49,10 +50,10 @@ const Patient = ({ onClose }) => {
     setShowRun(true);
   };
 
-  const handleDeleteClick = (patient) => {
-    setSelectedPatient(patient);
-    setShowDeletePrompt(true);
-  };
+const handleDeleteClick = (patient) => {
+  setSelectedPatient(patient);
+  setShowDeletePrompt(true);
+};
 
   const confirmDelete = async () => {
     try {
@@ -80,15 +81,18 @@ const Patient = ({ onClose }) => {
         </header>
         <hr /><br/>
         <div className='add'>
-          <input
-            placeholder=" Search by ID"
-            className='search'
-            value={searchId}
-            onChange={(e) => {
-              setSearchId(e.target.value);
-              if (!e.target.value.trim()) setFilteredPatients(patients);
-            }}
-          />
+        <input
+  placeholder="Search by ID, Name or Date of last test 🔍"
+  className='search'
+  value={searchId}
+  onChange={(e) => {
+    setSearchId(e.target.value);
+    if (!e.target.value.trim()) setFilteredPatients(patients);
+  }}
+  onKeyDown={(e) => {
+    if (e.key === 'Enter') handleSearch();  // 🔹 Press Enter to search
+  }}
+/>
           <button className='search-btn' onClick={handleSearch}>Search</button>
           <button className='add1' onClick={() => setShowRunTest(true)}>+ Add Patient</button>
         </div>
@@ -144,12 +148,12 @@ const Patient = ({ onClose }) => {
   />
 )}
 {showRunTest && <RunTest onClose={() => setShowRunTest(false)} refresh={fetchPatients} />}
+
 {showDeletePrompt && (
-  <Prompt onClose={() => setShowDeletePrompt(false)} closeDelete={confirmDelete}>
-    <h4>Delete Patient?</h4>
-    <p>ID: <b>{selectedPatient?.id}</b>. This can’t be undone.</p>
-  </Prompt>
+  <Prompt2 onClose={() => setShowDeletePrompt(false)} onConfirm={confirmDelete}>
+  </Prompt2>
 )}
+
 </div>
 );
 };

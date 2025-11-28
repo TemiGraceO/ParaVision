@@ -1,43 +1,105 @@
-.modal-overlay {
+.patient-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 2000;
 }
 
-.modal-content {
-  background: #fff;
-  padding: 20px;
+/* Main Card */
+.patient-card {
+  width: 40%;
+  background: #ffffff;
   border-radius: 8px;
-  width: 400px;
-  max-width: 90%;
+  padding: 18px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.15);
+  font-family: "Poppins", sans-serif;
 }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Header Row */
+.top-bar {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  font-size: 1rem;
+  margin-bottom: 2%;
 }
 
-.close-btn {
-  background: none;
+.close-x {
+  background: rgba(0, 0, 0, 0.1);
   border: none;
-  font-size: 1.5rem;
+  font-size: .8rem;
   cursor: pointer;
+  width: 25%;
+  margin-left: 75%;
 }
 
-.modal-footer {
-  text-align: right;
-  margin-top: 20px;
+/* Patient Info Section */
+.details-grid {
+  margin-top: 2%;
+  display: grid;
+  grid-template-columns: repeat(2,2fr);
+  gap: 30%;
+  background: rgba(79, 165, 167, .2);
+  padding-bottom: 8%;
+  padding-left: 3%;
+  padding-top: 3%;
+  border-radius: 3px;
 }
 
-.btn-close {
-  padding: 8px 12px;
+.key {
+  font-size: 12px;
+  font-weight: 600;
+  color: #51a8a9;
+}
+
+.value {
+  font-size: 13px;
+}
+
+/* Section Title */
+.test-title {
+  margin-top: 25px;
+  font-weight: 650;
+  font-size: 16px;
+}
+
+/* Table */
+.test-table {
+  width: 100%;
+  margin-top: 8px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.test-table th, .test-table td {
+  padding: 9px 10px;
+  border: 1px solid #e6e6e6;
+}
+
+.test-table thead {
+  background: #f5f6f9;
+  font-weight: 600;
+}
+
+/* Print Button */
+.print-box {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.print-btn {
+  background: #51a8a9;
+  color: #f5f6f9;
+  border: none;
+  padding: 7px 20px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 14px;
+}
+.print-btn:hover{
+background-color: #438d8e;
 }

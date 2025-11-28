@@ -15,6 +15,13 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
   const canvasRef = useRef(null);
 
   const isActive = (section) => testType === 'both' || testType === section;
+  const isBloodActive = isActive('blood');
+  const isStoolActive = isActive('stool');
+
+  const isStartDisabled =
+    !testType ||
+    (testType.includes('blood') && !bloodSubType) ||
+    (testType.includes('stool') && !stoolMethod);
 
   useEffect(() => {
     if (testType === 'both' || testType === 'blood' || testType === 'stool') {
@@ -22,14 +29,10 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
         const videoDevices = devices.filter(d => d.kind === 'videoinput');
         setCameras(videoDevices);
         if (videoDevices.length < 2 && testType === 'both') {
-          alert("⚠️ Need 2 cameras for Blood + Stool!");
+          alert("Need 2 cameras for Blood + Stool!");
         }
-        if (testType === 'stool') {
-          setStoolCameraId(videoDevices[0]?.deviceId || '');
-        }
-        if (testType === 'blood') {
-          setBloodCameraId(videoDevices[2]?.deviceId || '');
-        }
+        if (testType === 'stool') setStoolCameraId(videoDevices[0]?.deviceId || '');
+        if (testType === 'blood') setBloodCameraId(videoDevices[2]?.deviceId || '');
         if (testType === 'both') {
           setBloodCameraId(videoDevices[2]?.deviceId || '');
           setStoolCameraId(videoDevices[0]?.deviceId || '');
@@ -59,7 +62,7 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
         bloodVideoRef.current.play();
       }
     } catch (err) {
-      alert("Camera error! 😕");
+      alert("Camera error!");
       console.error(err);
     }
   };
@@ -83,52 +86,55 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
       <div className="modal-content">
         {!isScanning ? (
           <>
-            <header><h4>Run Test: {patient.id}</h4><button onClick={onClose}>×</button></header>
+            <header className='tpp'><h4>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 24 24" fill="#4fa5a7">
+                <path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"/>
+              </svg>  Run Test</h4><button onClick={onClose}>×</button></header>
             <hr />
             <div className="modal-body">
+              <div className='identity'>
               <p><b>Patient:</b> {patient.name}</p>
+              <p className='id2'><b>ID:</b> {patient.id}</p></div>
               <div className="test-options">
-                <label>Test:</label>
+                <label><b>Test Type: </b>
                 <select value={testType} onChange={e => setTestType(e.target.value)}>
-                  <option value="">Pick…</option>
+                  <option value="">Pick</option>
                   <option value="blood">Blood</option>
                   <option value="stool">Stool</option>
                   <option value="both">Blood + Stool</option>
-                </select>
-                {isActive('blood') && (
-                  <div>
-                    <label>Blood Type:</label>
-                    <select value={bloodSubType} onChange={e => setBloodSubType(e.target.value)}>
-                      <option value="">Choose</option>
-                      <option>Thick Smear</option>
-                      <option>Thin Smear</option>
-                    </select>
-                  </div>
-                )}
-                {isActive('stool') && (
-                  <div>
-                    <label>Stool Method:</label>
-                    <select value={stoolMethod} onChange={e => setStoolMethod(e.target.value)}>
-                      <option value="">Choose</option>
-                      <option>Direct Smear</option>
-                      <option>Concentration</option>
-                    </select>
-                  </div>
-                )}
+                </select></label>
+
+                <div className={!isBloodActive ? 'disabled' : ''}>
+                  <label><b>Blood Type: </b>
+                   <select value={bloodSubType} onChange={e => setBloodSubType(e.target.value)} disabled={!isBloodActive}>
+                    <option value="">Choose</option>
+                    <option>Thick Smear</option>
+                    <option>Thin Smear</option>
+                  </select></label>
+                </div>
+
+                <div className={!isStoolActive ? 'disabled' : ''}>
+                  <label><b>Stool Method: </b>
+                  <select value={stoolMethod} onChange={e => setStoolMethod(e.target.value)} disabled={!isStoolActive}>
+                    <option value="">Choose</option>
+                    <option>Direct Smear</option>
+                    <option>Concentration</option>
+                  </select></label>
+                </div>
               </div>
-              <button onClick={() => setIsScanning(true)} disabled={
-                !testType || (testType.includes('blood') && !bloodSubType) || (testType.includes('stool') && !stoolMethod)
-              }>Start Test</button>
+              <button className='btn31'
+                onClick={() => setIsScanning(true)}
+                disabled={isStartDisabled}>
+                Start Test
+              </button>
             </div>
-            <footer><button onClick={onClose}>Close</button></footer>
           </>
         ) : showCamera ? (
           <div className="camera-modal">
-            <header><h4>📸 Live Capture</h4><button onClick={stopCamera}>×</button></header>
+            <header><h4>Live Capture</h4><button onClick={stopCamera}>×</button></header>
             <div className="modal-body">
               {testType === 'both' ? (
                 <div className="dual-feed">
-                    
                   <video ref={bloodVideoRef} className="feed" autoPlay playsInline />
                   <video ref={stoolVideoRef} className="feed" autoPlay playsInline />
                 </div>
@@ -139,14 +145,13 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
             </div>
             <footer className="modal-footer">
               <button className="btn-close" onClick={stopCamera}>Close</button>
-              <button className="capture-btn">Capture Frame</button>
             </footer>
           </div>
         ) : (
           <div className="scan-modal">
-            <header><h4>🔬 Test in Progress...</h4></header>
+            <header><h4>Test in Progress</h4></header>
             <div className="modal-body">
-              <p>Analyzing {testType} sample...</p>
+              <p>Analyzing {testType} sample</p>
               <div className="loader"></div>
               <button className="live-capture-btn" onClick={openCamera}>View Live Capture</button>
             </div>

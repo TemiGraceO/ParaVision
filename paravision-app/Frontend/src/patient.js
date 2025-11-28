@@ -130,7 +130,7 @@ const Patient = ({ onClose }) => {
       </div>
     ))
   ) : (
-    <p>No patients found. 😕 Try searching again or adding a new patient!</p>
+    <p>No patients found. Try searching again or adding a new patient!</p>
   )}
 </div>
 </div>

@@ -1,38 +1,70 @@
-import React from 'react';
-import './view-patient.css';
+import React from "react";
+import "./view-patient.css";
 
-const ViewPatient = ({ patient, onClose, captures = [] }) => {
+const ViewPatient = ({ patient, onClose }) => {
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <header className="modal-header">
-          <h4>📄 {patient.id} Details</h4>
-          <button className="close-btn" onClick={onClose}>×</button>
-        </header>
-        <hr />
-        <div className="modal-body">
-          <p><b>Name:</b> {patient.name}</p>
-          <p><b>Age:</b> {patient.age}</p>
-          <p><b>Gender:</b> {patient.gender}</p>
-          <p><b>Date of Entry:</b> {new Date().toLocaleDateString()}</p>
+    <div className="patient-modal-overlay">
+      <div className="patient-card">
 
-          <h5>Test Captures:</h5>
-          {captures.length === 0 ? (
-            <p>No images captured yet.</p>
-          ) : (
-            captures.map((c, i) => (
-              <div key={i} className="capture-item">
-                <img src={c.image} alt="test" width="100" />
-                <p>{c.date} | {c.type}</p>
-                <button>View Analysis</button>
-                <button onClick={() => window.print()}>Print</button>
-              </div>
-            ))
-          )}
+        {/* Top Header Bar */}
+        <div className="top-bar">
+          <div className="head-id">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#4fa5a7">
+                <path d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 13a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
+              </svg> View - id: {patient.id}
+          </div>
+          <button className="close-x" onClick={onClose}>✕</button>
         </div>
-        <footer className="modal-footer">
-          <button className="btn-close" onClick={onClose}>Close</button>
-        </footer>
+
+        <hr/>
+
+        {/* Patient Info Section */}
+        <div className="details-grid">
+          <div>
+            <p className="key">Name:</p>
+            <p className="value">{patient.name}</p>
+          </div>
+
+          <div>
+            <p className="key">Age:</p>
+            <p className="value">{patient.age}</p>
+          </div>
+          <div>
+            <p className="key">Gender:</p>
+            <p className="value">{patient.gender}</p>
+          </div>
+
+          <div>
+            <p className="key">Date of Entry:</p>
+            <p className="value">{new Date().toLocaleDateString()}</p>
+          </div>
+        </div>
+
+        {/* Most Recent Test */}
+        <h4 className="test-title">Most Recent Test</h4>
+
+        <table className="test-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Test Type</th>
+              <th>Smear Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{new Date().toLocaleDateString()}</td>
+              <td>Microscopy</td>
+              <td>ZN Smear</td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Print Button */}
+        <div className="print-box">
+          <button className="print-btn">🖨 Print</button>
+        </div>
+
       </div>
     </div>
   );

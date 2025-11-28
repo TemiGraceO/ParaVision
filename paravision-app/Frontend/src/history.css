@@ -13,7 +13,7 @@
 }
 
 .history-modal-content {
-  width: 80%;
+  width: 50%;
   max-width: 90%;
   background-color: #f8f9fa;
   animation: hm-slideIn 0.3s ease-in-out;

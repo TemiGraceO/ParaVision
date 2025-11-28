@@ -42,17 +42,17 @@ const History = ({ onClose }) => {
             <option>Stool</option>
             <option>Blood + Stool</option>
           </select>
-          <button className="hm-filter-btn">🔍 Filter</button>
+          <button className="hm-filter-btn">Filter</button>
         </div>
 
         <table className="hm-table">
           <thead>
             <tr>
               <th>S/N</th>
+              <th>Date</th>
               <th>Patient ID</th>
               <th>Test Type</th>
               <th>Smear Type</th>
-              <th>Date</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -61,18 +61,19 @@ const History = ({ onClose }) => {
               filteredTests.map((t, i) => (
                 <tr key={t.id}>
                   <td>{i + 1}</td>
+                  <td>{t.date}</td>
                   <td>{t.patientId}</td>
                   <td>{t.type}</td>
                   <td>{t.smear}</td>
-                  <td>{t.date}</td>
+                  
                   <td>
-                    <button className="hm-action-btn">🔍 View</button>
-                    <button className="hm-action-btn">🖨️ Print</button>
+                    <button className="hm-action-btn"> View</button>
+                    <button className="hm-action-btn"> Print</button>
                   </td>
                 </tr>
               ))
             ) : (
-              <tr><td colSpan="7">No tests found. 😕</td></tr>
+              <tr><td colSpan="7">No tests found.</td></tr>
             )}
           </tbody>
         </table>

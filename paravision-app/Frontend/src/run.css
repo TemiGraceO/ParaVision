@@ -29,7 +29,7 @@ p{
   border: 1px solid black;
 }
 .run-test-container {
-  background-color: aliceblue;
+  background-color:#fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);

@@ -1,4 +1,5 @@
 import React, { useState} from 'react';
+import './about.css';
 
 const About = ({ onClose }) => {
   const [closing, setClosing] = useState(false);
@@ -7,13 +8,14 @@ const About = ({ onClose }) => {
     setClosing(true);
     setTimeout(() => {
       onClose();
-    }, 300); // wait for the animation to complete
+    }, 300);
   };
 
   return (
     <div className={`about-container ${closing ? 'slide-out' : ''}`}>
-        <button onClick={handleClose} className='btn2'>X</button>
-      <h3>About ParaVision</h3><br/>
+
+      <div className='abt'><h5>ParaVision</h5>
+             <button onClick={handleClose} className='x'>X</button></div>
       <video width="300" height="200" controls>
         <source src="ParaVision Demo.mp4" type="video/mp4" />
         Your browser does not support the video tag.</video>

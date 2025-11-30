@@ -38,7 +38,7 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .folder-icon {
@@ -72,10 +72,8 @@
 }
 
 .add {
-  margin-bottom: 20px;
   display: flex;
-  gap: 10px;
-  margin-top: 1%;
+  gap: 3px;
 }
 .add1{
   background-color: #4fa5a7;

@@ -70,7 +70,32 @@
   border-bottom: none;
   border-radius: 5px;
 }
-
+.test{
+  margin-bottom: 1%;
+}
+.div{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 25%;
+}
+.div button{
+  padding: 6%;
+  border-radius: 10px;
+}
+.div .l{
+  background-color: #357a7a;
+  color: #fff;
+}
+.div .btn-close{
+  background-color: rgba(230, 0, 0, 0.5);
+  color: #fff;
+}
+.btn-close:hover{
+  background-color: rgba(230, 0, 0, 0.8);
+}
+.l:hover{
+  background: #4fa5a7;
+}
 .id2 {
   margin-left: auto;
 }
@@ -83,7 +108,16 @@
 .camera-body {
   padding: 20px;
 }
-
+.live{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10%;
+  margin-bottom: 2%;
+}
+.live button{
+  margin-left: 60%;
+  width: 40%;
+}
 .dual-feed {
   display: flex;
   gap: 15px;
@@ -178,4 +212,13 @@
 .tpp button{
   width: 20%;
   margin-left: 80%;
+}
+.btn-close1{
+  float: right;
+  background-color: #357a7a;
+  color: #fff;
+  padding: 2%, 4%;
+}
+.btn-close1:hover{
+  background-color: #4dafaf;
 }

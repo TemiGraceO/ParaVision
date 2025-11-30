@@ -3,7 +3,8 @@ import './patient.css';
 import RunTest from './run';
 import ViewPatient from './ViewPatient';
 import RunTestPage from './RunTestPage';
-import Prompt2 from './prompt';
+import DeletePrompt from "./DeletePrompt";
+
 
 const Patient = ({ onClose }) => {
   const [patients, setPatients] = useState([]);
@@ -51,16 +52,16 @@ const Patient = ({ onClose }) => {
   };
 
 const handleDeleteClick = (patient) => {
-  setSelectedPatient(patient);
-  setShowDeletePrompt(true);
-};
+     console.log("Deleting ID:", patient.id); // 👈 Verify ID
+     setSelectedPatient(patient);
+     setShowDeletePrompt(true);
+   };
 
   const confirmDelete = async () => {
     try {
       await fetch(`http://localhost:8000/api/patients/${selectedPatient.id}`, {
         method: 'DELETE',
       });
-      alert("Deleted! This can't be undone.");
       fetchPatients();
     } catch (err) {
       console.error("Delete error:", err);
@@ -134,7 +135,7 @@ const handleDeleteClick = (patient) => {
       </div>
     ))
   ) : (
-    <p>No patients found. Try searching again or adding a new patient!</p>
+    <p>No patients found. Add a new patient!</p>
   )}
 </div>
 </div>
@@ -150,9 +151,13 @@ const handleDeleteClick = (patient) => {
 {showRunTest && <RunTest onClose={() => setShowRunTest(false)} refresh={fetchPatients} />}
 
 {showDeletePrompt && (
-  <Prompt2 onClose={() => setShowDeletePrompt(false)} onConfirm={confirmDelete}>
-  </Prompt2>
+  <DeletePrompt
+    onClose={() => setShowDeletePrompt(false)}
+    onConfirm={confirmDelete}
+    patient={selectedPatient}
+  />
 )}
+
 
 </div>
 );

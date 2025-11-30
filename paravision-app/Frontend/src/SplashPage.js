@@ -68,18 +68,18 @@ const handleClosePatientClick = () => {
         splashPage.classList.add('animate-out');
         setTimeout(() => {
           firstPage.classList.add('animate-in');
-        }, 400); // wait for 0.5s before fading in .first
+        }, 200); // wait for 0.5s before fading in .first
       }
-    }, 400);
+    }, 300);
   }, []);
 
   return (
     <>
       <div className='splash-page'>
-        <div className="words">
-          <h1 className='move'>
+        <div className="">
+          <h1 className=''>
             <div className="logo">
-              <img src='logo2.png' alt='paravision logo' style={{ width: '10%' }} />
+              <img src='logo2.png' alt='paravision logo'style={{ width: '10%' }} className='abc' />
               <span id="main">ParaVision</span>
             </div>
             <span className="down">Empowering Precision Diagnostics</span>
@@ -90,56 +90,67 @@ const handleClosePatientClick = () => {
           </div>
         </div>
         <div>
-          <img className='image' src="paravision.png" alt="Microscope" style={{ width: '70%'}} /><br/>
+          <img className='image' src="paravision.png" alt="Microscope" style={{ width: '80%'}} />
         </div>
         <div className="next-interface"> </div>
-      </div><br/><br></br><div><footer>TeamABU@2025/2026</footer></div>
+      </div><div><footer>TeamABU@2025/2026</footer></div>
 
 
 
       <div className='first'>
         <div className='up'>
-          <img src='logo2.png' alt='logo' style={{ width: '3%', zIndex:'10000'}} />
+          <img src='logo2.png' alt='logo' style={{ width: '3%', zIndex:'10000'}} className='ab'/>
            <button className='btna' onClick={handleAboutClick}>About App</button>
-        </div><hr />
-        <div className='mid'>
-          <div className='left'>
-            <h1>Precision Diagnostics,Redefined</h1>
-            <p> ParaVision offers cutting-edge tools for accurate and efficient cellular analysis, empowering you to make a confident decision </p>
-           
-          </div>
         </div>
+          <div className='left'>
+            <div className='left1'>
+            <h1>Precision Diagnostics,Redefined</h1>
+            <p> ParaVision offers cutting-edge tools for accurate and efficient cellular analysis, empowering you to make a confident decision </p></div>
+           <div><img src='test.png' alt='paravision logo'className='test' /></div>
+          </div>
         <div className='third'>
           <h2>Core Functionalities</h2>
         </div>
         <div className="horizontal-layout">
-          
-          <div className="item" onClick={handlePatientClick}><svg width="44" height="30" viewBox="0 0 24 24" fill="none" stroke="#143d3eff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M5 21v-2a4 4 0 0 1 8 0v2"></path>
-            <line x1="16" y1="10" x2="22" y2="10"></line>
-            <line x1="16" y1="14" x2="22" y2="14"></line>
-            <line x1="16" y1="18" x2="22" y2="18"></line>
-          </svg> <br /><h5>Patients Management</h5><p>Easily view, add and merge patients records</p>
-          <button className='btn1'>Manage Patients</button></div>
-        
-          <div className="item" onClick={handleDataClick}><h5><svg width="48" height="30" viewBox="0 0 24 24" fill="none" stroke="rgb(55, 113, 114)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="4" y1="20" x2="4" y2="10"></line>
-            <line x1="10" y1="20" x2="10" y2="4"></line>
-            <line x1="16" y1="20" x2="16" y2="14"></line>
-            <polyline points="3 6 10 12 16 8 21 14"></polyline>
-          </svg><br/>Data Analytics</h5><p>Visualize trends and gain statistical insights</p>
-          <button className='btn1'>View Analytics</button></div>
-
-            <div className="item" onClick={handleHistoryClick}><h5><svg width="40" height="30" viewBox="0 0 24 24" fill="none" stroke="#143d3eff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="1 4 1 10 7 10"></polyline>
-            <path d="M3.51 15a9 9 0 1 0 .49-9"></path>
-            <line x1="12" y1="7" x2="12" y2="12"></line>
-            <line x1="12" y1="12" x2="15" y2="15"></line>
-          </svg> <br />Review History</h5><p>Access past test results of patients</p>
-          <button className='btn1'>Access History</button></div>
-          
-        </div>
+  <div className="item" onClick={handlePatientClick}>
+    <svg width="44" height="30" viewBox="0 0 24 24" fill="none" stroke="#143d3eff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="9" cy="7" r="4"></circle>
+      <path d="M5 21v-2a4 4 0 0 1 8 0v2"></path>
+      <line x1="16" y1="10" x2="22" y2="10"></line>
+      <line x1="16" y1="14" x2="22" y2="14"></line>
+      <line x1="16" y1="18" x2="22" y2="18"></line>
+    </svg>
+    <h5>Patients Management</h5>
+    <p>Easily view and add patients records</p>
+    <button className='btn1'>Manage Patients</button>
+  </div>
+  <div className="item" onClick={handleDataClick}>
+    <h5>
+      <svg width="48" height="30" viewBox="0 0 24 24" fill="none" stroke="rgb(55, 113, 114)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="4" y1="20" x2="4" y2="10"></line>
+        <line x1="10" y1="20" x2="10" y2="4"></line>
+        <line x1="16" y1="20" x2="16" y2="14"></line>
+        <polyline points="3 6 10 12 16 8 21 14"></polyline>
+      </svg>
+      <br />Data Analytics
+    </h5>
+    <p>Visualize trends and statistics</p>
+    <button className='btn1'>View Analytics</button>
+  </div>
+  <div className="item" onClick={handleHistoryClick}>
+        <h5>
+      <svg width="40" height="30" viewBox="0 0 24 24" fill="none" stroke="#143d3eff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="1 4 1 10 7 10"></polyline>
+        <path d="M3.51 15a9 9 0 1 0 .49-9"></path>
+        <line x1="12" y1="7" x2="12" y2="12"></line>
+        <line x1="12" y1="12" x2="15" y2="15"></line>
+      </svg>
+      <br />Review History
+    </h5>
+    <p>Access past test results of patients</p>
+    <button className='btn1'>Access History</button>
+  </div>
+</div>
       </div>
       {showAbout && (
   <div className="about-overlay">

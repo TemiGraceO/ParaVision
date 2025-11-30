@@ -19,6 +19,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   width: 300px;
   text-align: center;
+  color: azure;
 }
 .btnw{
     display: flex;

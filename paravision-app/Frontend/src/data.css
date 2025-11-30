@@ -19,7 +19,15 @@
   border-left: 2px solid #4fa5a7;
   overflow-y: auto;
 }
-.btn2 { float: right; border: none; background: none; font-size: 20px; cursor: pointer; }
+.data{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  margin-bottom: 2%;
+  gap: 40%;
+}
+.btnc{
+  margin-left: 70%;
+}
 .filters {
     margin-top: -1%;
   display: flex; flex-direction: column; gap: 12px; margin-bottom: 10px;
@@ -41,9 +49,7 @@
     margin-top: -1%;
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 10px;
 }
-.close-btn{
-    float: right;
-}
+
 .card {
   background: #fff; padding: 16px; border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);

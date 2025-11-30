@@ -131,7 +131,7 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
           </>
         ) : showCamera ? (
           <div className="camera-modal">
-            <header><h4>Live Capture</h4><button onClick={stopCamera}>×</button></header>
+            <header className='live'><h4>Microscopic live View</h4><button onClick={stopCamera}>×</button></header>
             <div className="modal-body">
               {testType === 'both' ? (
                 <div className="dual-feed">
@@ -142,22 +142,19 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
                 <video ref={bloodVideoRef} className="camera-feed" autoPlay playsInline />
               )}
               <canvas ref={canvasRef} style={{ display: 'none' }} />
+              <button className="btn-close1" onClick={stopCamera}>Close</button>
             </div>
-            <footer className="modal-footer">
-              <button className="btn-close" onClick={stopCamera}>Close</button>
-            </footer>
           </div>
         ) : (
           <div className="scan-modal">
-            <header><h4>Test in Progress</h4></header>
+            <header><h4 className='test'>Test in Progress</h4><hr/></header>
             <div className="modal-body">
               <p>Analyzing {testType} sample</p>
               <div className="loader"></div>
-              <button className="live-capture-btn" onClick={openCamera}>View Live Capture</button>
+              <div className='div'>
+              <button className="l" onClick={openCamera}>View Live Capture</button>
+              <button className="btn-close" onClick={handleCancel}>Cancel</button></div>
             </div>
-            <footer>
-              <button className="btn-close" onClick={handleCancel}>Cancel</button>
-            </footer>
           </div>
         )}
       </div>

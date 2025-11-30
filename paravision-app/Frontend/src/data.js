@@ -9,9 +9,11 @@ const Data = ({ onClose }) => {
   const [timeRange, setTimeRange] = useState('7d');
   const [testType, setTestType] = useState('all');
 
-  const handleClose = () => {
+ const handleClose = () => {
     setClosing(true);
-    setTimeout(() => onClose(), 300);
+    setTimeout(() => {
+      onClose();
+    }, 300);
   };
 
   const chartData = {
@@ -38,19 +40,22 @@ const Data = ({ onClose }) => {
   return (
     <div className={`data-overlay ${closing ? 'slide-out' : ''}`}>
       <div className="data-container">
-        <button onClick={handleClose} className="close-btn">×</button>
-        <h3 className='data'>Data Analytics</h3><hr /><br />
+        <div className='data'>
+        <h3>Data Analytics</h3>
+        <button onClick={handleClose} className='btnc'>×</button></div>
 
         <div className="filters">
           <div className='in'>
             <input type="date" defaultValue="2025-12-25" />
             <select value={testType} onChange={(e) => setTestType(e.target.value)}>
               <option>All Tests</option>
-              <option>COVID-19</option>
-              <option>Malaria</option>
+              <option>Blood</option>
+              <option>Stool</option>
             </select>
             <select>
               <option>All Patient Groups</option>
+              <option>Female</option>
+              <option>Male</option>
             </select>
           </div>
           <div className='time'>

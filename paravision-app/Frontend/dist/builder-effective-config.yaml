@@ -1,0 +1,17 @@
+directories:
+  output: dist
+  buildResources: assets
+files:
+  - filter:
+      - build/**/*
+      - build/**/*
+      - main.js
+extraMetadata:
+  main: build/electron.js
+appId: com.example.app
+productName: ParaVision
+win:
+  target:
+    - nsis
+extends: react-cra
+electronVersion: 39.2.3

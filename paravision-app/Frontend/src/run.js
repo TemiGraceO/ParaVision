@@ -3,6 +3,7 @@ import './run.css';
 import Prompt from './prompt';
 
 const RunTest = ({ onClose, refresh }) => {
+  const [date] = useState(new Date().toISOString().split('T')[0]);
   const [showPrompt, setShowPrompt] = useState(false);
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
@@ -11,7 +12,9 @@ const RunTest = ({ onClose, refresh }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { id: patientId, name, age: Number(age), gender };
+    const data = { id: patientId, name, age: Number(age), gender, date };
+    const method = patient ? 'PUT': 'POST';
+    const url = patient ? '/api/patients/${patient.id}' : '/api/patients';
     try {
       const res = await fetch('http://localhost:8000/api/patients', {
         method: 'POST',
@@ -19,8 +22,7 @@ const RunTest = ({ onClose, refresh }) => {
         body: JSON.stringify(data),
       });
       if (res.ok) {
-        alert("Added! 🎉");
-        refresh(); // Updates list without reload
+        refresh();
         onClose();
       } else {
         alert("Error! Check ID.");
@@ -30,25 +32,18 @@ const RunTest = ({ onClose, refresh }) => {
     }
   };
 
-  const handleCloseClick = () => {
-    setShowPrompt(true); // Opens Prompt.js
-  };
+  const handleCloseClick = () => setShowPrompt(true);
 
   return (
     <div className="run-test-overlay">
       <div className="run-test-container">
         <header className="run-test-header">
           <h4>Add Patient's Demographics</h4>
-          <button
-            className="close-button"
-            onClick={handleCloseClick}
-            type="button"
-          >
-            ×
-          </button>
+          <button className="close-button" onClick={handleCloseClick} type="button">×</button>
         </header>
         <hr />
         <main className="run-test-content">
+
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="name" className='lsmear'>Name:</label>
@@ -73,11 +68,20 @@ const RunTest = ({ onClose, refresh }) => {
               <label htmlFor="patientId" className='lsmear'>ID:</label>
               <input id="patientId" type="text" placeholder="Enter Patient's ID" value={patientId} onChange={(e) => setPatientId(e.target.value)} required />
             </div>
-            <label htmlFor="date" className='lsmear'>Date of entry:</label><br />
-            <input type='date' className='date' /><br /><br />
+          <label htmlFor="date" className='lsmear'>Date of Entry:</label><br />
+       <input
+       id='date'
+       type="date"
+       className='date'
+       value={date}
+       required
+       readOnly
+     /><br /><br />
             <hr />
             <div className='btn100'>
-              <button className="run-btn" type="submit">Add to record</button>
+      <button className="run-btn" type="submit">
+  {patient ? 'Update' : 'Add to record'}
+        </button>   
             </div>
           </form>
         </main>

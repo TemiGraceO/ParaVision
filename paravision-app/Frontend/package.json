@@ -52,13 +52,16 @@
   },
   "build": {
     "appId": "com.example.app",
-    "productName": "MyApp",
+    "productName": "ParaVision",
+    "author": "Your Name",
     "files": [
       "build/**/*",
       "main.js"
     ],
-    "directories": {
-      "buildResources": "assets"
+    "win": {
+      "target": [
+        "nsis"
+      ]
     }
   }
 }

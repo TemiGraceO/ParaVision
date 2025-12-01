@@ -6,13 +6,22 @@ const ViewPatient = ({ patient, onClose, refresh, tests = [] }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [search, setSearch] = useState('');
-  const filteredTests = tests.filter(t =>
-    t.patientId.includes(search) || t.date.includes(search)
+  const [localTests, setLocalTests] = useState(tests);
+
+  const filteredTests = localTests.filter(t =>
+    t.patientId?.toLowerCase().includes(search.toLowerCase()) || t.date?.includes(search)
   );
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    setLocalTests(tests); // Sync prop tests
+  }, [tests]); // Re-run when `tests` prop changes
+
+  const handleTestComplete = (newTest) => {
+    setLocalTests((prev) => [...prev, newTest]); // Add to table instantly
+    refresh(); // Sync with backend
+    setIsEditing(false);
+  };
 
   return (
     <div className="patient-modal-overlay">
@@ -27,8 +36,13 @@ const ViewPatient = ({ patient, onClose, refresh, tests = [] }) => {
           <button className="close-x" onClick={onClose}>✕</button>
         </div>
         <hr />
+
         {isEditing ? (
-          <RunTest patient={patient} onClose={() => setIsEditing(false)} refresh={refresh} />
+          <RunTest
+            patient={patient}
+            onClose={() => setIsEditing(false)}
+            onTestComplete={handleTestComplete}
+          />
         ) : (
           mounted && (
             <>
@@ -43,12 +57,13 @@ const ViewPatient = ({ patient, onClose, refresh, tests = [] }) => {
               <h4 className="test-title">Test History</h4>
               <div className="hm-filters">
                 <input
-                  placeholder=" Search Patient ID or Date"
+                  placeholder=" Search Patient ID or Date 🔍"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   className="hm-search-input"
                 />
               </div>
+
               <table className="hm-table">
                 <thead>
                   <tr>
@@ -78,6 +93,7 @@ const ViewPatient = ({ patient, onClose, refresh, tests = [] }) => {
                   )}
                 </tbody>
               </table>
+
               <div className="print-box">
                 <button className="print-btn" onClick={() => window.print()}>🖨 Print details</button>
               </div>

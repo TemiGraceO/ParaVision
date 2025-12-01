@@ -30,6 +30,7 @@
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive */
   gap: 20px;
   margin-top: 20px;
+  margin-left: 1.5%;
 }
 
 .folder-card {
@@ -74,6 +75,7 @@
 .add {
   display: flex;
   gap: 3px;
+  margin-left: 1.5%;
 }
 .add1{
   background-color: #4fa5a7;

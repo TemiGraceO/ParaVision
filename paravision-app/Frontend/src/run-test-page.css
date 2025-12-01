@@ -122,6 +122,8 @@
   display: flex;
   gap: 15px;
   justify-content: space-between;
+  margin-bottom: 2%;
+  padding-right:1.5% ;
 }
 
 .feed {

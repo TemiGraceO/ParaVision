@@ -10,6 +10,7 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
   const [isScanning, setIsScanning] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
   const [cameras, setCameras] = useState([]);
+  
   const bloodVideoRef = useRef(null);
   const stoolVideoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -17,11 +18,7 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
   const isActive = (section) => testType === 'both' || testType === section;
   const isBloodActive = isActive('blood');
   const isStoolActive = isActive('stool');
-
-  const isStartDisabled =
-    !testType ||
-    (testType.includes('blood') && !bloodSubType) ||
-    (testType.includes('stool') && !stoolMethod);
+  const isStartDisabled = !testType || (testType.includes('blood') && !bloodSubType) || (testType.includes('stool') && !stoolMethod);
 
   useEffect(() => {
     if (testType === 'both' || testType === 'blood' || testType === 'stool') {
@@ -81,57 +78,85 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
     }
   };
 
+  const handleStartTest = async () => {
+    if (isStartDisabled) return;
+    setIsScanning(true);
+    const testData = {
+      patientId: patient.id,
+      name: patient.name,
+      type: testType,
+      smear: testType === 'blood' ? bloodSubType : stoolMethod,
+      date: new Date().toISOString().split('T')[0],
+      result: 'Pending',
+    };
+    try {
+      await fetch('/api/tests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(testData),
+      });
+      onCapturesUpdate?.(); // 👈 Refresh History
+      alert('Test started! Check history.');
+    } catch (err) {
+      alert('Error saving test!');
+    }
+  };
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
         {!isScanning ? (
           <>
-            <header className='tpp'><h4>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 24 24" fill="#4fa5a7">
-                <path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"/>
-              </svg>  Run Test</h4><button onClick={onClose}>×</button></header>
+            <header className='tpp'>
+              <h4>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 24 24" fill="#4fa5a7">
+                  <path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z" />
+                </svg> Run Test
+              </h4>
+              <button onClick={onClose}>×</button>
+            </header>
             <hr />
             <div className="modal-body">
               <div className='identity'>
-              <p><b>Patient:</b> {patient.name}</p>
-              <p className='id2'><b>ID:</b> {patient.id}</p></div>
+                <p><b>Patient:</b> {patient.name}</p>
+                <p className='id2'><b>ID:</b> {patient.id}</p>
+              </div>
               <div className="test-options">
                 <label><b>Test Type: </b>
-                <select value={testType} onChange={e => setTestType(e.target.value)}>
-                  <option value="">Pick</option>
-                  <option value="blood">Blood</option>
-                  <option value="stool">Stool</option>
-                  <option value="both">Blood + Stool</option>
-                </select></label>
-
+                  <select value={testType} onChange={e => setTestType(e.target.value)}>
+                    <option value="">Pick</option>
+                    <option value="blood">Blood</option>
+                    <option value="stool">Stool</option>
+                    <option value="both">Blood + Stool</option>
+                  </select>
+                </label>
                 <div className={!isBloodActive ? 'disabled' : ''}>
                   <label><b>Blood Type: </b>
-                   <select value={bloodSubType} onChange={e => setBloodSubType(e.target.value)} disabled={!isBloodActive}>
-                    <option value="">Choose</option>
-                    <option>Thick Smear</option>
-                    <option>Thin Smear</option>
-                  </select></label>
+                    <select value={bloodSubType} onChange={e => setBloodSubType(e.target.value)} disabled={!isBloodActive}>
+                      <option value="">Choose</option>
+                      <option>Thick Smear</option>
+                      <option>Thin Smear</option>
+                    </select>
+                  </label>
                 </div>
-
                 <div className={!isStoolActive ? 'disabled' : ''}>
                   <label><b>Stool Method: </b>
-                  <select value={stoolMethod} onChange={e => setStoolMethod(e.target.value)} disabled={!isStoolActive}>
-                    <option value="">Choose</option>
-                    <option>Direct Smear</option>
-                    <option>Concentration</option>
-                  </select></label>
+                    <select value={stoolMethod} onChange={e => setStoolMethod(e.target.value)} disabled={!isStoolActive}>
+                      <option value="">Choose</option>
+                      <option>Direct Smear</option>
+                      <option>Concentration</option>
+                    </select>
+                  </label>
                 </div>
               </div>
-              <button className='btn31'
-                onClick={() => setIsScanning(true)}
-                disabled={isStartDisabled}>
+              <button className='btn31' onClick={handleStartTest} disabled={isStartDisabled}>
                 Start Test
               </button>
             </div>
           </>
         ) : showCamera ? (
           <div className="camera-modal">
-            <header className='live'><h4>Microscopic live View</h4><button onClick={stopCamera}>×</button></header>
+            <header className='live'><h4>Microscopic Live View</h4><button onClick={stopCamera}>×</button></header>
             <div className="modal-body">
               {testType === 'both' ? (
                 <div className="dual-feed">
@@ -147,13 +172,14 @@ const RunTestPage = ({ patient, onClose, onCapturesUpdate }) => {
           </div>
         ) : (
           <div className="scan-modal">
-            <header><h4 className='test'>Test in Progress</h4><hr/></header>
+            <header><h4 className='test'>Test in Progress</h4><hr /></header>
             <div className="modal-body">
               <p>Analyzing {testType} sample</p>
               <div className="loader"></div>
               <div className='div'>
-              <button className="l" onClick={openCamera}>View Live Capture</button>
-              <button className="btn-close" onClick={handleCancel}>Cancel</button></div>
+                <button className="l" onClick={openCamera}>View Live Capture</button>
+                <button className="btn-close" onClick={handleCancel}>Cancel</button>
+              </div>
             </div>
           </div>
         )}

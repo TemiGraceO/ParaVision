@@ -2,25 +2,25 @@ import React, { useState } from 'react';
 import './run.css';
 import Prompt from './prompt';
 
-const RunTest = ({ onClose, refresh }) => {
+const RunTest = ({ patient, onClose, refresh }) => {
   const [date] = useState(new Date().toISOString().split('T')[0]);
   const [showPrompt, setShowPrompt] = useState(false);
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [patientId, setPatientId] = useState('');
+  const [name, setName] = useState(patient?.name || '');
+  const [age, setAge] = useState(patient?.age || '');
+  const [gender, setGender] = useState(patient?.gender || '');
+  const [patientId, setPatientId] = useState(patient?.id || '');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { id: patientId, name, age: Number(age), gender, date };
-    const method = patient ? 'PUT': 'POST';
-    const url = patient ? '/api/patients/${patient.id}' : '/api/patients';
+    const method = patient ? 'PUT' : 'POST';
+    const url = patient ? `/api/patients/${patient.id}` : '/api/patients';
     try {
-      const res = await fetch('http://localhost:8000/api/patients', {
-        method: 'POST',
+      const res = await fetch(`http://localhost:8000${url}`, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
-      });
+   });
       if (res.ok) {
         refresh();
         onClose();
@@ -38,7 +38,7 @@ const RunTest = ({ onClose, refresh }) => {
     <div className="run-test-overlay">
       <div className="run-test-container">
         <header className="run-test-header">
-          <h4>Add Patient's Demographics</h4>
+          <h4>{patient ? "Edit Patient" : "Add Patient's Demographics"}</h4>
           <button className="close-button" onClick={handleCloseClick} type="button">×</button>
         </header>
         <hr />

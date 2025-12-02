@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./view-patient.css";
 import RunTestPage from './run';
+import ViewTestResult from './ViewTestResult';
 
 const ViewPatient = ({ patient, onClose }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [tests, setTests] = useState([]);
   const [search, setSearch] = useState('');
+  const [error, setError] = useState(null);
+  const [showTestResult, setShowTestResult] = useState(false);
+  const [selectedTest, setSelectedTest] = useState(null);
 
   const fetchTests = async () => {
     try {
@@ -13,6 +17,7 @@ const ViewPatient = ({ patient, onClose }) => {
       const data = await res.json();
       setTests(data);
     } catch (err) {
+      setError(err.message);
       console.error("Error fetching tests:", err);
     }
   };
@@ -23,31 +28,36 @@ const ViewPatient = ({ patient, onClose }) => {
   }, [patient.id]);
 
   const handleTestComplete = (newTest) => {
-    // If backend returned { ok: true } (old behavior), try to use newTest data,
-    // but correct backend below returns full saved test object.
     if (!newTest) return;
-    // ensure date is present
     const normalized = {
       id: newTest.id || newTest._id || `${Date.now()}`,
-      patientId: newTest.patientId || newTest.patientId,
-      type: newTest.type || newTest.testType || newTest.type,
-      smear: newTest.smear || newTest.smear,
+      patientId: newTest.patientId,
+      type: newTest.type || newTest.testType,
+      smear: newTest.smear,
       date: newTest.date || new Date().toISOString(),
       result: newTest.result || "Pending..."
     };
-
     setTests(prev => [normalized, ...prev]);
     setIsEditing(false);
   };
 
   const filteredTests = tests.filter(t => {
     try {
-      return t.patientId.toLowerCase().includes(search.toLowerCase()) ||
+      return t.patientId.toLowerCase().includes(search.toLowerCase()) || 
              (t.date && t.date.toLowerCase().includes(search.toLowerCase()));
     } catch (e) {
       return false;
     }
   });
+
+  const handleViewTestResult = (test) => {
+    setSelectedTest(test);
+    setShowTestResult(true);
+  };
+
+  const handleCloseTestResult = () => {
+    setShowTestResult(false);
+  };
 
   return (
     <div className="patient-modal-overlay">
@@ -58,11 +68,7 @@ const ViewPatient = ({ patient, onClose }) => {
         </div>
         <hr />
         {isEditing ? (
-          <RunTestPage
-            patient={patient}
-            onClose={() => setIsEditing(false)}
-            onTestComplete={handleTestComplete}   // <-- match child prop
-          />
+          <RunTestPage patient={patient} onClose={() => setIsEditing(false)} onTestComplete={handleTestComplete} />
         ) : (
           <>
             <div className="details-grid">
@@ -71,7 +77,7 @@ const ViewPatient = ({ patient, onClose }) => {
               <div><p className="key">Gender:</p><p className="value">{patient.gender}</p></div>
               <div><p className="key">Date of Entry:</p><p className="value">{patient.date ? new Date(patient.date).toLocaleDateString() : "N/A"}</p></div>
               <button className="edit" onClick={() => setIsEditing(true)}>Edit</button>
-            </div>
+            </div><br/>
             <h4 className="test-title">Test History</h4>
             <input 
               placeholder="Search by Date or Test Type 🔍" 
@@ -79,42 +85,46 @@ const ViewPatient = ({ patient, onClose }) => {
               onChange={e => setSearch(e.target.value)} 
               className="hm" 
             />
+            {error && <p className="error">{error}</p>}
             <div className="table-container">
-            <table className="hm-table">
-              <thead>
-                <tr>
-                  <th>S/N</th>
-                  <th>Date</th>
-                  <th>Test Type</th>
-                  <th>Smear Type</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredTests.length ? (
-                  filteredTests.map((t, i) => (
-                    <tr key={t.id || i}>
-                      <td>{i + 1}</td>
-                      <td>{t.date ? new Date(t.date).toLocaleString() : "N/A"}</td>
-                      <td>{t.type}</td>
-                      <td>{t.smear}</td>
-                      <td>
-                        <button className="hm-action-btn">View</button>
-                        <button className="hm-action-btn">Print</button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr><td colSpan="5">No tests found.</td></tr>
-                )}
-              </tbody>
-            </table>
+              <table className="hm-table">
+                <thead>
+                  <tr>
+                    <th>S/N</th>
+                    <th>Date</th>
+                    <th>Test Type</th>
+                    <th>Smear Type</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredTests.length ? (
+                    filteredTests.map((t, i) => (
+                      <tr key={t.id || i}>
+                        <td>{i + 1}</td>
+                        <td>{t.date ? new Date(t.date).toLocaleString() : "N/A"}</td>
+                        <td>{t.type}</td>
+                        <td>{t.smear}</td>
+                        <td>
+                          <button className="hm-action-btn" onClick={() => handleViewTestResult(t)}>View</button>
+                          <button className="hm-action-btn">Print</button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr><td colSpan="5">No tests found.</td></tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           </>
         )}
       </div>
+      {showTestResult && (
+        <ViewTestResult test={selectedTest} patient={patient} onClose={handleCloseTestResult} />
+      )}
     </div>
   );
 };
 
-export default ViewPatient;
+export default ViewPatient

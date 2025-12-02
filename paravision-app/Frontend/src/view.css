@@ -1,0 +1,53 @@
+.test-result-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.test-result-card {
+  width: 40%;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 18px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.15);
+  font-family: "Poppins", sans-serif;
+}
+
+.test-result-card h2 {
+  font-weight: 650;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.test-result-card p {
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.test-result-card .key {
+  font-size: 12px;
+  font-weight: 600;
+  color: #51a8a9;
+}
+
+.test-result-card .value {
+  font-size: 13px;
+}
+.test1{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 70%;
+    width: 110%;
+}
+.close{
+    width: 35%;
+    background: none;
+}
+.a123{
+    background-color: rgba(79, 165, 167, .2);
+    padding: 3%;
+}

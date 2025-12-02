@@ -14,7 +14,7 @@ const RunTestPage = ({ patient, onClose, onTestComplete }) => {
   const stoolVideoRef = useRef(null);
   const canvasRef = useRef(null);
 
-  const isActive = (section) => testType === 'Both' || testType === section;
+  const isActive = (section) => testType === 'Stool and Blood' || testType === section;
   const isBloodActive = isActive('Blood');
   const isStoolActive = isActive('Stool');
   const isStartDisabled = !testType || (testType.includes('Blood') && !bloodSubType) || (testType.includes('Stool') && !stoolMethod);
@@ -24,11 +24,11 @@ const RunTestPage = ({ patient, onClose, onTestComplete }) => {
       navigator.mediaDevices.enumerateDevices().then(devices => {
         const videoDevices = devices.filter(d => d.kind === 'videoinput');
         setCameras(videoDevices);
-        if (videoDevices.length < 2 && testType === 'Both') alert("Need 2 cameras for Blood + Stool!");
+        if (videoDevices.length < 2 && testType === 'Stool and Blood') alert("Need 2 cameras for Blood + Stool!");
         // choose indices defensively
         if (testType === 'Stool') setStoolCameraId(videoDevices[0]?.deviceId || '');
         if (testType === 'Blood') setBloodCameraId(videoDevices[0]?.deviceId || ''); // default to first available
-        if (testType === 'Both') {
+        if (testType === 'Stool and Blood') {
           setBloodCameraId(videoDevices[0]?.deviceId || '');
           setStoolCameraId(videoDevices[1]?.deviceId || videoDevices[0]?.deviceId || '');
         }
@@ -37,10 +37,10 @@ const RunTestPage = ({ patient, onClose, onTestComplete }) => {
   }, [testType]);
 
   const openCamera = async () => {
-    if (testType === 'Both' && cameras.length < 2) return alert("Add 2 cameras!");
+    if (testType === 'Stool and Blood' && cameras.length < 2) return alert("Add 2 cameras!");
     setShowCamera(true);
     try {
-      if (testType === 'Both') {
+      if (testType === 'Stool and Blood') {
         const bloodStream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: bloodCameraId } } });
         const stoolStream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: stoolCameraId } } });
         bloodVideoRef.current.srcObject = bloodStream;
@@ -135,7 +135,7 @@ const RunTestPage = ({ patient, onClose, onTestComplete }) => {
                     <option value="">Pick</option>
                     <option value="Blood">Blood</option>
                     <option value="Stool">Stool</option>
-                    <option value="Both">Blood + Stool</option>
+                    <option value="Stool and Blood">Blood + Stool</option>
                   </select>
                 </label>
 
@@ -168,7 +168,7 @@ const RunTestPage = ({ patient, onClose, onTestComplete }) => {
           <div className="camera-modal">
             <header className='live'><h4>Microscopic live View</h4><button onClick={stopCamera}>×</button></header>
             <div className="modal-body">
-              {testType === 'Both' ? (
+              {testType === 'Stool and Blood' ? (
                 <div className="dual-feed">
                   <video ref={bloodVideoRef} className="feed" autoPlay playsInline />
                   <video ref={stoolVideoRef} className="feed" autoPlay playsInline />

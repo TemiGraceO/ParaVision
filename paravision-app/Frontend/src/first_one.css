@@ -24,16 +24,15 @@ body{
   align-items: center;
   margin: auto;
   background: linear-gradient(30deg,#fff,#f3f9fa,#e0f5f7);
-  background-color: #fff;
   justify-items: center;
-  
+  padding: 3% 0;
 }
 .left1{
   margin-left: 10%;
   filter:drop-shadow(0 2px 2px rgba(0, 0, 0, .3));
 }
 .left h1{
-  font-size: 45px;
+  font-size: 50px;
 }
 .left p{
   font-family: 'Gabriola';
@@ -51,7 +50,7 @@ footer{
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #fff;
+  background: linear-gradient(30deg,#e0f5f7,#e0f5f7,#e0f5f7);
   color: #367273;
   padding: .5%;
   text-align: center;
@@ -68,7 +67,7 @@ footer{
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 20%;
   /* rest of your styles */
 }
 .image{
@@ -149,7 +148,7 @@ footer{
   align-content: center;
   padding-left: 19%;
   padding-right: 7%;
-  margin-top: 8%;
+  margin-top: 9%;
 }
 
 .splash-page.animate-out {
@@ -171,7 +170,7 @@ footer{
 
 .third{
   padding-left: 3%;
-  padding-top: 2%;
+  padding-top: 3%;
   color:#fff;
   font-size: 15px;
 }
@@ -226,19 +225,20 @@ footer{
 }
 .btna{
   padding: 1%;
-  background-color: #448d8e;
+  background-color: #ebf7f8;
+  color: #333;
   border: none;
-  color: white;
+  margin-right: 3%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   margin-top: 2%;
-  font-size: 90%;
+  font-size: 70%;
   margin-top: -.1%;
   border: 1px solid #4fa5a7;
 }
 .btna:hover{
-  background-color: #ebf7f8;
-  color: #4fa5a7;
+  background-color: #448d8e;
+  color: white;
 }
 .btn:hover{
   cursor: pointer;

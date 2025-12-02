@@ -9,11 +9,9 @@ const Data = ({ onClose }) => {
   const [timeRange, setTimeRange] = useState('7d');
   const [testType, setTestType] = useState('all');
 
- const handleClose = () => {
+  const handleClose = () => {
     setClosing(true);
-    setTimeout(() => {
-      onClose();
-    }, 300);
+    setTimeout(() => onClose(), 300);
   };
 
   const chartData = {
@@ -23,7 +21,7 @@ const Data = ({ onClose }) => {
         label: 'Positive Tests',
         data: [12, 19, 3, 5, 2, 3, 7],
         backgroundColor: '#4fa5a7',
-        borderRadius: 8,
+        borderRadius: 10,
       },
     ],
   };
@@ -32,69 +30,85 @@ const Data = ({ onClose }) => {
     responsive: true,
     plugins: {
       legend: { display: false },
-      tooltip: { callbacks: { label: (t) => `${t.dataset.label}: ${t.raw} tests` } },
+      tooltip: { callbacks: { label: t => `${t.dataset.label}: ${t.raw} tests` } }
     },
-    scales: { y: { beginAtZero: true } },
+    scales: { y: { beginAtZero: true } }
   };
 
   return (
     <div className={`data-overlay ${closing ? 'slide-out' : ''}`}>
       <div className="data-container">
-        <div className='data'>
-        <h3>Data Analytics</h3>
-        <button onClick={handleClose} className='btnc'>×</button></div>
 
-        <div className="filters">
-          <div className='in'>
-            <input type="date" defaultValue="2025-12-25" />
-            <select value={testType} onChange={(e) => setTestType(e.target.value)}>
-              <option>All Tests</option>
-              <option>Blood</option>
-              <option>Stool</option>
-            </select>
-            <select>
-              <option>All Patient Groups</option>
-              <option>Female</option>
-              <option>Male</option>
-            </select>
-          </div>
-          <div className='time'>
-            <p className={timeRange === '7d' ? 'active' : ''} onClick={() => setTimeRange('7d')}>Last 7 Days</p>
-            <p className={timeRange === '30d' ? 'active' : ''} onClick={() => setTimeRange('30d')}>Last 30 Days</p>
-            <p className={timeRange === 'q' ? 'active' : ''} onClick={() => setTimeRange('q')}>This Quarter</p>
-            <p className={timeRange === '6m' ? 'active' : ''} onClick={() => setTimeRange('6m')}>Last 6 Months</p>
-          </div>
+        {/* Header */}
+        <div className="analytics-header">
+          <h2>Data Analytics</h2>
+          <button onClick={handleClose} className="close-btn">×</button>
         </div>
 
+        {/* Filters */}
+        <div className="filter-bar">
+
+          <select 
+            value={testType} 
+            onChange={(e) => setTestType(e.target.value)} 
+            className="filter-select"
+          >
+            <option>All Tests</option>
+            <option>Blood</option>
+            <option>Stool</option>
+          </select>
+
+          <select className="filter-select">
+            <option>All Patient Groups</option>
+            <option>Female</option>
+            <option>Male</option>
+          </select>
+
+          <div className="days">
+            <p className={timeRange === '7d' ? 'active' : ''} onClick={() => setTimeRange('7d')}>7 Days</p>
+            <p className={timeRange === '30d' ? 'active' : ''} onClick={() => setTimeRange('30d')}>30 Days</p>
+            <p className={timeRange === 'q' ? 'active' : ''} onClick={() => setTimeRange('q')}>Quarter</p>
+            <p className={timeRange === '6m' ? 'active' : ''} onClick={() => setTimeRange('6m')}>6 Months</p>
+          </div>
+
+        </div>
+
+        {/* Cards */}
         <div className="analytics-grid">
           <div className="card">
-            <h2>0</h2>
-            <p>Total Tests Processed</p>
-            <span className="up">+0%</span>
+            <h1>0</h1>
+            <p>Total Tests</p>
+            <span className="trend up">+0%</span>
           </div>
           <div className="card">
-            <h2>0%</h2>
-            <p>Positive Result Rate</p>
-            <span className="up">+0%</span>
+            <h1>0%</h1>
+            <p>Positive Rate</p>
+            <span className="trend up">+0%</span>
           </div>
           <div className="card">
-            <h2>0</h2>
-            <p>New Patients Analyzed</p>
-            <span className="up">+0%</span>
+            <h1>0</h1>
+            <p>New Patients</p>
+            <span className="trend up">+0%</span>
           </div>
         </div>
 
+        {/* Chart + Breakdown */}
         <div className="content-grid">
+          
           <div className="chart-box">
             <h3>Positive Tests Over Time</h3>
             <Bar data={chartData} options={options} />
           </div>
+
           <div className="breakdown-box">
-            <h3>Result Breakdown</h3><hr />
+            <h3>Result Breakdown</h3>
+            <hr />
             <p>🔹 Positive: 0 (0%)</p>
             <p>🔹 Negative: 0 (0%)</p>
           </div>
+
         </div>
+
       </div>
     </div>
   );

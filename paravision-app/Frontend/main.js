@@ -9,7 +9,7 @@ function createWindow() {
     maximizable: false,
     minimizable: true,
     frame: true,
-    fullscreen: false,
+    fullscreen: true,
     title: 'ParaVision',
     webPreferences: {
       zoomFactor: 1.0,

@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.DEBUG)
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "http://localhost:8000", "http://localhost"],  # adjust as needed
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -22,6 +22,14 @@ class Patient(BaseModel):
     age: int
     gender: str
     date: str
+
+class Test(BaseModel):
+    patientId: str
+    name: str
+    type: str  # "Blood", "Stool", "Both"
+    smear: str
+    date: str
+    result: str
 
 @app.post("/api/patients")
 async def create_patient(patient: Patient):
@@ -64,39 +72,34 @@ async def update_patient(patient_id: str, patient: Patient):
         json.dump(patient.dict(), f)
     return {"ok": True}
 
-class Test(BaseModel):
-    patientId: str
-    name: str
-    type: str  # "Blood", "Stool", "Both"
-    smear: str
-    date: str
-    result: str
-
 @app.post("/api/tests")
 async def create_test(test: Test):
     test_id = str(uuid.uuid4())
     folder = Path("tests").resolve()
     folder.mkdir(exist_ok=True)
-    file = folder / f"{test.patientId}_{test.date}_{test_id}.json"
+    file = folder / f"{test.patientId}_{test_id}.json"
+    test_data = {**test.dict(), "id": test_id}
     with open(file, "w") as f:
-        json.dump({**test.dict(), "id": test_id}, f)
-    return {"ok": True}
+        json.dump(test_data, f)
+    # return the saved test object so frontend receives full data
+    return test_data
 
 @app.get("/api/tests")
-async def get_tests(search: str = "", sampleType: str = "", dateRange: str = ""):
+async def get_tests(patientId: str = None):
     tests = []
-    for f in Path("tests").glob("*.json"):
+    folder = Path("tests").resolve()
+    folder.mkdir(exist_ok=True)
+    for f in folder.glob("*.json"):
         with open(f) as file:
-            tests.append(json.load(file))
-    # Filter logic
-    if search:
-        tests = [t for t in tests if search in t["patientId"] or search in t["date"]]
-    if sampleType and sampleType != "All":
-        tests = [t for t in tests if t["type"] == sampleType]
-    if dateRange:
-        days = {"7d": 7, "30d": 30, "6m": 180}[dateRange]
-        cutoff = (datetime.now() - timedelta(days=days)).isoformat()
-        tests = [t for t in tests if t["date"] >= cutoff[:10]]
+            test = json.load(file)
+            if patientId and test["patientId"] != patientId:
+                continue
+            tests.append(test)
+    # optional: sort by date desc
+    try:
+        tests.sort(key=lambda x: x.get("date",""), reverse=True)
+    except Exception:
+        pass
     return tests
 
 if __name__ == "__main__":

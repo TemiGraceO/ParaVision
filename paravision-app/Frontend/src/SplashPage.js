@@ -76,8 +76,8 @@ const handleClosePatientClick = () => {
   return (
     <>
       <div className='splash-page'>
-        <div className="">
-          <h1 className=''>
+        <div>
+          <h1>
             <div className="logo">
               <img src='logo2.png' alt='paravision logo'style={{ width: '10%' }} className='abc' />
               <span id="main">ParaVision</span>
@@ -134,7 +134,7 @@ const handleClosePatientClick = () => {
       </svg>
       <br />Data Analytics
     </h5>
-    <p>Visualize trends and statistics</p>
+    <p>Visualize trends and statistics easily</p>
     <button className='btn1'>View Analytics</button>
   </div>
   <div className="item" onClick={handleHistoryClick}>

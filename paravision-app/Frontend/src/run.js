@@ -52,15 +52,15 @@ const RunTest = ({ patient, onClose, refresh }) => {
             <div className="two">
               <div className="form-group">
                 <label htmlFor="age" className='lsmear'>Age:</label>
-                <input id="age" type="number" placeholder="eg 42" value={age} onChange={(e) => setAge(e.target.value)} required />
+                <input id="age" type="number" value={age} onChange={(e) => setAge(e.target.value)} required />
               </div>
               <div className="form-group" id='gender'>
                 <label htmlFor="gender" style={{ paddingLeft: 20 }} className='lsmear'>Gender:</label>
                 <select id="gender" value={gender} onChange={(e) => setGender(e.target.value)} required>
                   <option value="">Select</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="others">Others</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Others">Others</option>
                 </select>
               </div>
             </div>

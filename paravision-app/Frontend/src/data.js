@@ -53,13 +53,12 @@ const Data = ({ onClose }) => {
             onChange={(e) => setTestType(e.target.value)} 
             className="filter-select"
           >
-            <option>All Tests</option>
-            <option>Blood</option>
-            <option>Stool</option>
+            <option>Blood Tests</option>
+            <option>Stool Tests</option>
           </select>
 
           <select className="filter-select">
-            <option>All Patient Groups</option>
+            <option>All Gender</option>
             <option>Female</option>
             <option>Male</option>
           </select>

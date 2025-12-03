@@ -4,7 +4,7 @@ import About from './about';
 import RunTest from './run';
 import Patient from './patient';
 import Data from './data';
-import History from './history';
+import Config from './history';
 
 function SplashPage() {
   const [showHistory, setShowHistory] = useState(false);
@@ -126,7 +126,7 @@ const handleClosePatientClick = () => {
   </div>
   <div className="item" onClick={handleDataClick}>
     <h5>
-      <svg width="48" height="30" viewBox="0 0 24 24" fill="none" stroke="rgb(55, 113, 114)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="48" height="30" viewBox="0 0 24 24" fill="none" stroke="#143d3eff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <line x1="4" y1="20" x2="4" y2="10"></line>
         <line x1="10" y1="20" x2="10" y2="4"></line>
         <line x1="16" y1="20" x2="16" y2="14"></line>
@@ -140,15 +140,13 @@ const handleClosePatientClick = () => {
   <div className="item" onClick={handleHistoryClick}>
         <h5>
       <svg width="40" height="30" viewBox="0 0 24 24" fill="none" stroke="#143d3eff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="1 4 1 10 7 10"></polyline>
-        <path d="M3.51 15a9 9 0 1 0 .49-9"></path>
-        <line x1="12" y1="7" x2="12" y2="12"></line>
-        <line x1="12" y1="12" x2="15" y2="15"></line>
-      </svg>
-      <br />Review History
+  <circle cx="12" cy="12" r="3"></circle>
+  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09A1.65 1.65 0 0 0 19.4 15z"></path>
+</svg>
+      <br />Configurations
     </h5>
-    <p>Access past test results of patients</p>
-    <button className='btn1'>Access History</button>
+    <p>Manage application settings and preferences</p>
+    <button className='btn1'>Configure</button>
   </div>
 </div>
       </div>
@@ -175,7 +173,7 @@ const handleClosePatientClick = () => {
 )}
 {showHistory && (
   <div className="history-overlay">
-    <History onClose={handleCloseHistory} />
+    <Config onClose={handleCloseHistory} />
   </div>
 )}
    

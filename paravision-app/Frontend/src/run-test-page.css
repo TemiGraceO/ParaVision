@@ -126,6 +126,11 @@
   padding-right:1.5% ;
 }
 
+.ask{
+  padding: 1%;
+  width: 98%;
+  border: .3px solid black;
+}
 .feed {
   width: 49%;
   height: 350px;
@@ -223,4 +228,28 @@
 }
 .btn-close1:hover{
   background-color: #4dafaf;
+}
+.test-options input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.a123 p {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.a123 .key {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.a123 .value {
+  flex-grow: 1;
+  text-align: right;
 }

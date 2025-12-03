@@ -13,6 +13,7 @@ const RunTestPage = ({ patient, onClose, onTestComplete }) => {
   const bloodVideoRef = useRef(null);
   const stoolVideoRef = useRef(null);
   const canvasRef = useRef(null);
+  const [testTakenBy, setTestTakenBy] = useState('')
 
   const isActive = (section) => testType === 'Stool and Blood' || testType === section;
   const isBloodActive = isActive('Blood');
@@ -75,16 +76,16 @@ const RunTestPage = ({ patient, onClose, onTestComplete }) => {
   };
 
   const handleStartTest = async () => {
-    setIsScanning(true);
-
-    const payload = {
-      patientId: patient.id,
-      name: patient.name,
-      type: testType,
-      smear: bloodSubType || stoolMethod,
-      date: new Date().toISOString(),
-      result: "Pending..."
-    };
+  setIsScanning(true);
+  const payload = {
+    patientId: patient.id,
+    name: patient.name,
+    type: testType,
+    smear: bloodSubType || stoolMethod,
+    date: new Date().toISOString(),
+    result: "Pending...",
+    takenBy: testTakenBy // Make sure this is correct
+  };
 
     try {
       const res = await fetch("http://localhost:8000/api/tests", {   // <-- correct URL
@@ -158,6 +159,18 @@ const RunTestPage = ({ patient, onClose, onTestComplete }) => {
                     </select>
                   </label>
                 </div>
+     
+                  <label><b>Test Taken By: <br/></b>
+            <input 
+                  type='text' 
+                value={testTakenBy} 
+        onChange={(e) => setTestTakenBy(e.target.value)} 
+        required 
+          className='ask'
+          placeholder="Enter name"
+          />
+                  </label>
+  
               </div>
               <button className='btn31' onClick={handleStartTest} disabled={isStartDisabled}>
                 Start Test

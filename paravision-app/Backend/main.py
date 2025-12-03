@@ -30,6 +30,7 @@ class Test(BaseModel):
     smear: str
     date: str
     result: str
+    takenBy: str
 
 @app.post("/api/patients")
 async def create_patient(patient: Patient):

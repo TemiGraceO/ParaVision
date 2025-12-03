@@ -12,11 +12,10 @@ const ViewTestResult = ({ test, patient,onClose }) => {
         <div>
           <div className='a123'>
           <p><span className="key">Patient Name:</span> <span className="value">{patient.name}</span></p>
-          <p><span className="key">ID:</span> <span className="value">{patient.id}</span></p>
+          <p><span className="key">PID:</span> <span className="value">{patient.id}</span></p>
           <p><span className="key">Test Type:</span> <span className="value">{test.type}</span></p>
-          <p><span className="key">Date of Test:</span> <span className="value">{test.date}</span></p>
-          <p><span className='key'>Name of Lab: </span></p>
-          </div>
+          <p><span className="key">Date of Test:</span>  <span className="value">{new Date(test.date).toLocaleString()}</span></p>
+          <p><span className='key'>Test Taken By: </span><span className='value'>{test.takenBy}</span></p>                    </div>
           {/* Add more test result details here */}
           <button className='btn31'>Print</button>
         </div>

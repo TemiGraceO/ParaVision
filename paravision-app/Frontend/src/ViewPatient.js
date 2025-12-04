@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./view-patient.css";
 import RunTestPage from './run';
 import ViewTestResult from './ViewTestResult';
+import './view-patient.css'
 
 const ViewPatient = ({ patient, onClose }) => {
   const [isEditing, setIsEditing] = useState(false);

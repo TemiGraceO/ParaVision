@@ -72,18 +72,17 @@
   margin-top: 8px;
   border-collapse: collapse;
   font-size: 14px;
+  text-align: justify;
+}
+.hm-table {
+  width: 100%;
+  margin-top: 8px;
+  border-collapse: collapse;
+  font-size: 14px;
+  text-align: justify;
 }
 
-.test-table th, .test-table td {
-  padding: 9px 10px;
-  border: 1px solid #e6e6e6;
-}
 
-.test-table thead {
-  background: #f5f6f9;
-  font-weight: 600;
-  text-align: left;
-}
 
 /* Print Button */
 .print-box {
@@ -139,23 +138,41 @@ background-color: #438d8e;
   font-size: 14px;
 }
 
-.test-result-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
+.hm-table {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border-collapse: collapse;
+  font-size: 14px;
 }
 
-.test-result-card {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  width: 80%;
-  max-width: 500px;
+.hm-table th, .hm-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.hm-table th {
+  background-color: #4fa5a7;
+  color: #fff;
+}
+
+.hm-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.hm-table tr:hover {
+  background-color: #ddd;
+}
+
+.hm-action-btn {
+  padding: 5px 10px;
+  background-color: #4fa5a7;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.hm-action-btn:hover {
+  background-color: #357a7c;
 }

@@ -18,7 +18,7 @@
   background: #fff;
   padding: 24px;
   border-radius: 12px;
-  width: 470px;
+  width: 50%;
   max-width: 90%;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
@@ -103,6 +103,7 @@
 /* Camera Modal */
 .camera-modal {
   text-align: center;
+  width: 100%;
 }
 
 .camera-body {

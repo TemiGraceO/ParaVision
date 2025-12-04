@@ -100,7 +100,9 @@ const handleClosePatientClick = () => {
       <div className='first'>
         <div className='up'>
           <img src='logo2.png' alt='logo' style={{ width: '3%', zIndex:'10000'}} className='ab'/>
+          <div className='split'><select className='opt'><option>English (Default)</option><option>Chinese</option><option>French</option></select>
            <button className='btna' onClick={handleAboutClick}>About App</button>
+           </div>
         </div>
           <div className='left'>
             <div className='left1'>

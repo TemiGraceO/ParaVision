@@ -25,7 +25,6 @@ const RunTestPage = ({ patient, onClose, onTestComplete }) => {
       navigator.mediaDevices.enumerateDevices().then(devices => {
         const videoDevices = devices.filter(d => d.kind === 'videoinput');
         setCameras(videoDevices);
-        if (videoDevices.length < 2 && testType === 'Stool and Blood') alert("Need 2 cameras for Blood + Stool!");
         // choose indices defensively
         if (testType === 'Stool') setStoolCameraId(videoDevices[0]?.deviceId || '');
         if (testType === 'Blood') setBloodCameraId(videoDevices[0]?.deviceId || ''); // default to first available

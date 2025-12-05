@@ -3,7 +3,7 @@ import './history.css';
 
 const Config = ({ onClose }) => {
   const [closing, setClosing] = useState(false);
-  const [hospitalName, setHospitalName] = useState('Your Hospital Name');
+  const [hospitalName, setHospitalName] = useState('');
   const [hospitalNumber, setHospitalNumber] = useState('');
   const [labId, setLabId] = useState('');
   const [testTypes, setTestTypes] = useState(['Blood', 'Stool', 'Blood + Stool']);

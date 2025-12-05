@@ -68,9 +68,9 @@ const handleClosePatientClick = () => {
         splashPage.classList.add('animate-out');
         setTimeout(() => {
           firstPage.classList.add('animate-in');
-        }, 200); // wait for 0.5s before fading in .first
+        }, 400); // wait for 0.5s before fading in .first
       }
-    }, 300);
+    }, 500);
   }, []);
 
   return (

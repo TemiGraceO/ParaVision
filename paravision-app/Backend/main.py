@@ -32,6 +32,12 @@ class Test(BaseModel):
     result: str
     takenBy: str
 
+class Config(BaseModel):
+    hospitalName: str
+    hospitalNumber: str
+    labId: str
+    address: str
+
 @app.post("/api/patients")
 async def create_patient(patient: Patient):
     folder = (Path("patients") / patient.id).resolve()
@@ -102,6 +108,21 @@ async def get_tests(patientId: str = None):
     except Exception:
         pass
     return tests
+
+@app.post("/api/config")
+async def create_config(config: Config):
+    with open("config.json", "w") as f:
+        json.dump(config.dict(), f)
+    return {"ok": True}
+
+@app.get("/api/config")
+async def get_config():
+    try:
+        with open("config.json") as f:
+            config = json.load(f)
+        return config
+    except FileNotFoundError:
+        return {}
 
 if __name__ == "__main__":
     import uvicorn

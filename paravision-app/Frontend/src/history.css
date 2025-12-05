@@ -13,7 +13,7 @@
 }
 
 .config-modal-content {
-  width: 50%;
+  width:35%;
   max-width: 90%;
   background-color: #f8f9fa;
   animation: cm-slideIn 0.3s ease-in-out;
@@ -38,6 +38,7 @@
 
 .cm-form {
   margin-bottom: 20px;
+  width: 80%;
 }
 
 .cm-form label {
@@ -93,6 +94,7 @@
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  margin-top: -4%;
 }
 
 @keyframes cm-fadeIn {

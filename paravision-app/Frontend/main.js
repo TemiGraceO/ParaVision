@@ -12,6 +12,7 @@ function createWindow() {
     fullscreen: true,
     title: 'ParaVision',
     webPreferences: {
+      devTools:false,
       zoomFactor: 1.0,
       nodeIntegration: true, // Keep if needed, else use contextIsolation + preload
     },

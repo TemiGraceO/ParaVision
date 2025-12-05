@@ -159,16 +159,7 @@ const RunTestPage = ({ patient, onClose, onTestComplete }) => {
                   </label>
                 </div>
      
-                  <label><b>Test Taken By: <br/></b>
-            <input 
-                  type='text' 
-                value={testTakenBy} 
-        onChange={(e) => setTestTakenBy(e.target.value)} 
-        required 
-          className='ask'
-          placeholder="Enter name"
-          />
-                  </label>
+                  
   
               </div>
               <button className='btn31' onClick={handleStartTest} disabled={isStartDisabled}>

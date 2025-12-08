@@ -59,10 +59,34 @@ const ViewTestResult = ({ test, patient, onClose }) => {
                 <th className='key'>Test Taken By:</th>
                 <th className='value'>{config.testBy}</th>
               </tr> 
+              <tr>
+                <th className='key'>Malaria Status:</th>
+                <th></th>
+              </tr>
+              <tr>
+                <th className='key'>RBC:</th>
+                <th></th>
+              </tr>
+              <tr>
+                <th className='key'>WBC:</th>
+                <th></th>
+              </tr>
+              <tr>
+                <th className='key'>Ascaris:</th>
+                <th className='value'></th>
+              </tr>
+              <tr>
+                <th className='key'>Hookworm:</th>
+                <th className='value'></th>
+              </tr>
+              <tr>
+                <th className='key'>Trichuris:</th>
+                <th className='value'></th>
+              </tr>
             </table>
             </div>
           </div>    
-          <button className='btn31'>Print</button>
+          <button className='btn31' onClick={window.print}>Print</button>
         </div>
       </div>
     </div>

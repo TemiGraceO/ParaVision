@@ -9,7 +9,8 @@
 }
 
 .test-result-card {
-  height: 90%;
+  overflow-y: auto;
+  height: 85%;
   width: 90%;
   background: #ffffff;
   border-radius: 8px;

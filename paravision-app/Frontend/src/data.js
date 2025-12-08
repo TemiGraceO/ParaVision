@@ -100,10 +100,24 @@ const Data = ({ onClose }) => {
           </div>
 
           <div className="breakdown-box">
+            <div className='result'>
             <h3>Result Breakdown</h3>
             <hr />
             <p>🔹 Positive: 0 (0%)</p>
             <p>🔹 Negative: 0 (0%)</p>
+            </div>
+            <div className='images'>
+              <h3>See All Images
+              </h3>
+              <svg width="180" height="140" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+              className='pic'>
+  <path d="M3 5H10L12 7H21C21.55 7 22 7.45 22 8V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 5.45 2.45 5 3 5Z" 
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M8 13L10 11L13 14L15 12L18 15" 
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="9" cy="10" r="1" fill="currentColor"/>
+</svg>
+         </div>
           </div>
 
         </div>

@@ -5,6 +5,7 @@ import json, shutil, logging
 from pathlib import Path
 from datetime import datetime, timedelta
 import uuid
+CONFIG_FILE = Path("config.json")
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -30,13 +31,13 @@ class Test(BaseModel):
     smear: str
     date: str
     result: str
-    takenBy: str
 
 class Config(BaseModel):
     hospitalName: str
-    hospitalNumber: str
-    labId: str
+    hostpitalID: int
+    labId: int
     address: str
+    testBy: str
 
 @app.post("/api/patients")
 async def create_patient(patient: Patient):
@@ -72,12 +73,22 @@ async def delete_patient(patient_id: str):
 
 @app.put("/api/patients/{patient_id}")
 async def update_patient(patient_id: str, patient: Patient):
-    folder = (Path("patients") / patient_id).resolve()
-    if not folder.is_dir():
+    old_folder = Path("patients") / patient_id
+    new_folder = Path("patients") / patient.id
+
+    if not old_folder.is_dir():
         raise HTTPException(404, f"Patient {patient_id} not found")
-    with open(folder / "data.json", "w") as f:
+
+    if patient_id != patient.id:
+        if new_folder.exists():
+            raise HTTPException(400, "A patient with this new ID already exists")
+        old_folder.rename(new_folder)
+
+    with open(new_folder / "data.json", "w") as f:
         json.dump(patient.dict(), f)
-    return {"ok": True}
+
+    return {"ok": True, "patient": patient.dict()}
+
 
 @app.post("/api/tests")
 async def create_test(test: Test):
@@ -110,19 +121,17 @@ async def get_tests(patientId: str = None):
     return tests
 
 @app.post("/api/config")
-async def create_config(config: Config):
-    with open("config.json", "w") as f:
+async def save_config(config: Config):
+    with open(CONFIG_FILE, "w") as f:
         json.dump(config.dict(), f)
     return {"ok": True}
 
 @app.get("/api/config")
 async def get_config():
-    try:
-        with open("config.json") as f:
-            config = json.load(f)
-        return config
-    except FileNotFoundError:
+    if not CONFIG_FILE.exists():
         return {}
+    with open(CONFIG_FILE) as f:
+        return json.load(f)
 
 if __name__ == "__main__":
     import uvicorn

@@ -42,7 +42,9 @@
   color: #4fa5a7;
   width: 4%;
 }
-
+.result{
+  margin-bottom: 35%;
+}
 /* Filters */
 .filter-bar {
   display: flex;
@@ -143,4 +145,17 @@
 @keyframes slideIn {
   from { transform: translateX(40%); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
+}
+.pic{
+  margin-top: -10%;
+  transition:transform 0.2s ease-in-out;
+}
+.pic:hover{
+  cursor: pointer;
+  transform: scale(1.2);
+}
+.images{
+  justify-content: center;
+  justify-items: center;
+  justify-self: center;
 }

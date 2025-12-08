@@ -9,7 +9,8 @@
 }
 
 .test-result-card {
-  width: 40%;
+  height: 90%;
+  width: 90%;
   background: #ffffff;
   border-radius: 8px;
   padding: 18px;
@@ -17,37 +18,43 @@
   font-family: "Poppins", sans-serif;
 }
 
-.test-result-card h2 {
-  font-weight: 650;
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.test-result-card p {
-  font-size: 13px;
-  margin-bottom: 10px;
-}
-
-.test-result-card .key {
-  font-size: 12px;
-  font-weight: 600;
-  color: #51a8a9;
-}
-
-.test-result-card .value {
-  font-size: 13px;
-}
 .test1{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 70%;
+    gap: 45%;
     width: 110%;
 }
 .close{
     width: 35%;
     background: none;
+    margin-left: 32%;
 }
 .a123{
     background-color: rgba(79, 165, 167, .2);
     padding: 3%;
+    margin-top: 2%;
+}
+.conf{
+  text-align: center;
+}
+.my-table table{
+  margin: auto;
+  justify-content: center;
+  justify-items: center;
+  justify-self: center;
+  border-collapse: collapse;
+  width: 90%;
+}
+.my-table table .key{
+  text-align: justify;
+  color: black;
+  font-size: 1rem;
+}
+.my-table table .value{
+  text-align:center;
+  font-size: 1rem;
+}
+.my-table th, .my-table td{
+  border: 1px solid #363535;
+  padding: 10px;
 }

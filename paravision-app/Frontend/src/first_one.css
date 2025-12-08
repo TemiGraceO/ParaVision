@@ -437,3 +437,7 @@ footer{
     opacity: 1;
   }
 }
+.middle{
+  text-align: center;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,63 @@
+.test-result-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.test-result-card {
+  overflow-y: auto;
+  height: 85%;
+  width: 90%;
+  overflow-x: hidden;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 18px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.15);
+  font-family: "Poppins", sans-serif;
+}
+
+.test1{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 45%;
+    width: 110%;
+}
+.close{
+    width: 35%;
+    background: none;
+    margin-left: 32%;
+}
+.a123{
+    background-color: rgba(79, 165, 167, .2);
+    padding: 3%;
+    margin-top: 2%;
+}
+.conf{
+  text-align: center;
+}
+.my-table{
+  margin: auto;
+  justify-content: center;
+  justify-items: center;
+  justify-self: center;
+  border-collapse: collapse;
+  width: 90%;
+  font-size: 10px;
+}
+.my-table .key{
+  text-align: justify;
+  color: black;
+  font-size: 1rem;
+}
+.my-table .value{
+  text-align:center;
+  font-size: 1rem;
+}
+.my-table th, .my-table td{
+  border: 1px solid #363535;
+  padding: 10px;
+}

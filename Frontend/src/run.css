@@ -1,0 +1,104 @@
+p{
+    font-size: 80%;
+}
+.date{
+  width: 100%;
+  padding: 1%;
+}
+.run-test-overlay {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.smear{
+  font-size: 20px;
+}
+.lsmear{
+  font-size: 25px;
+}
+.left{
+  margin-right: 30%;
+}
+.left input{
+  border: 1px solid black;
+}
+.run-test-container {
+  background-color:#fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+  width: 50%;
+  padding-right: 3%;
+  font-size: 20px;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.run-test-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.options {
+  display: flex;
+  gap: 20px;
+}
+
+.options input[type="radio"] {
+  margin-right: 5px;
+}
+
+.two {
+  display: flex;
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.run-btn {
+  background-color: #4fa5a7;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+.run-btn:hover {
+  background-color: #418384;
+}
+
+input[type="radio"]:checked + label {
+  font-weight: bold;
+}
+#gender{
+    margin-left: 10%;
+    width: 80%;
+}

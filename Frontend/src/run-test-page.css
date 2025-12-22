@@ -1,0 +1,306 @@
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+}
+
+/* Modal Content */
+.modal-content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  width: 75%;
+  max-height:80%;
+  max-width: 90%;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.voice {
+  display: flex;
+  justify-content: space-between;
+  margin-left: -10%;
+}
+
+.modal-header h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #357a7a;
+}
+
+/* Modal Body */
+.modal-body {
+  width: 100%;
+  height:65%;
+}
+
+/* Identity Section */
+.identity {
+  display: grid;
+  background: rgba(79, 165, 167, 0.2);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  padding: 2%;
+  border: 5px solid #357a7a;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
+  border-radius: 5px;
+}
+
+.test {
+  margin-bottom: 1%;
+}
+
+.div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25%;
+}
+
+.div button {
+  padding: 6%;
+  border-radius: 10px;
+}
+
+.div .l {
+  background-color: #357a7a;
+  color: #fff;
+}
+
+.div .btn-close {
+  background-color: rgba(230, 0, 0, 0.5);
+  color: #fff;
+}
+
+.btn-close:hover {
+  background-color: rgba(230, 0, 0, 0.8);
+}
+
+.l:hover {
+  background: #4fa5a7;
+}
+
+.id2 {
+  margin-left: auto;
+}
+
+/* Camera Modal */
+.camera-modal {
+  text-align: center;
+  width: 100%;
+  height:75%;
+}
+
+.camera-body {
+  padding: 15px;
+}
+
+.live {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10%;
+  margin-bottom: 2%;
+}
+
+.live button {
+  margin-left: 60%;
+  width: 40%;
+}
+
+/* Dual video feed */
+.dual-feed {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  margin-bottom: 2%;
+  padding-right: 1.5%;
+}
+
+.dual-feed video.feed {
+  width: 49%;
+  height: 500px;
+  border: 2px solid #4fa5a7;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Single video feed */
+.camera-feed {
+  width: 100%;
+  max-height: 500px;
+  aspect-ratio: 4 / 3;
+  border: 3px solid #4fa5a7;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+.ask {
+  padding: 1%;
+  width: 98%;
+  border: 0.3px solid black;
+}
+
+/* Buttons */
+.capture-btn {
+  margin-left: 8px;
+  padding: 8px 16px;
+  background: rgba(79, 165, 167, 1);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.capture-btn:hover {
+  background: #357a7a;
+}
+
+/* Loader */
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #4fa5a7;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* TPP Grid */
+.tpp {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 1%;
+}
+
+.btn31 {
+  float: right;
+  margin-top: 5%;
+  background-color: #4fa5a7;
+  color: #fff;
+}
+
+.btn31:hover {
+  background-color: #357a7a;
+}
+
+.test-options {
+  border: 1px solid #357a7a;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.test-options select {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.test-options label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.tpp button {
+  width: 20%;
+  margin-left: 80%;
+}
+
+.btn-close1 {
+  float: right;
+  background-color: #357a7a;
+  color: #fff;
+  padding: 2%, 4%;
+}
+
+.btn-close1:hover {
+  background-color: #4dafaf;
+}
+
+.test-options input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.a123 p {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.a123 .key {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.a123 .value {
+  flex-grow: 1;
+  text-align: right;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dual-feed {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dual-feed video.feed {
+    width: 100%;
+    height: 300px;
+  }
+
+  .camera-feed {
+    height: 300px;
+  }
+}

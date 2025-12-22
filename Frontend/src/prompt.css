@@ -1,0 +1,44 @@
+
+.prompt-overlay {
+  position: fixed; /* Cover entire screen */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent backdrop */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;     /* Center vertically */
+  z-index: 9999; /* On top */
+}
+
+.prompt-box {
+  background: #4fa5a7;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 30%;
+  text-align: center;
+  color: azure;
+}
+.btnw{
+    display: flex;
+    gap: 10%;
+    justify-content: center;
+}
+button{
+    padding: 1% 4%;
+    background-color: aliceblue;
+    border-radius: 3px;
+    border: none;
+}
+button:hover{
+    background-color: rgb(198, 203, 207);
+    cursor: pointer;
+}
+.red{
+  background-color: rgb(235, 55, 55);
+}
+.red:hover{
+  background-color: rgb(220, 132, 132);
+}

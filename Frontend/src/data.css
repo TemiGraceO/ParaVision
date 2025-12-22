@@ -1,0 +1,161 @@
+/* Overlay */
+.data-overlay {
+  position: fixed;
+  z-index: 1200;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex; justify-content: flex-end;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Panel */
+.data-container {
+  width: 70%;
+  height: 100vh;
+  padding: 2rem;
+  background: #f6fbff;
+  animation: slideIn 0.35s ease;
+  border-left: 3px solid #4fa5a7;
+  overflow-y: auto;
+}
+
+/* Header */
+.analytics-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.analytics-header h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #194b4c;
+}
+
+.close-btn {
+  background: #fff;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  color: #4fa5a7;
+  width: 4%;
+}
+.result{
+  margin-bottom: 35%;
+}
+/* Filters */
+.filter-bar {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #c9dfe0;
+  background: #f8ffff;
+  color: #0b2f2f;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Days selector */
+.days {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.days p {
+  padding: 7px 14px;
+  border-radius: 6px;
+  background: #e8f1f1;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.days p.active {
+  background: #4fa5a7;
+  color: white;
+}
+
+/* Cards */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.card h1 {
+  font-size: 32px;
+  margin-bottom: 5px;
+  color: #194b4c;
+}
+
+.trend {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.up { color: #059f05; }
+
+/* Chart + Breakdown grid */
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.chart-box, .breakdown-box {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.breakdown-box h3,
+.chart-box h3 {
+  margin-bottom: 12px;
+  color: #194b4c;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(40%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.pic{
+  margin-top: -10%;
+  transition:transform 0.2s ease-in-out;
+}
+.pic:hover{
+  cursor: pointer;
+  transform: scale(1.2);
+}
+.images{
+  justify-content: center;
+  justify-items: center;
+  justify-self: center;
+}

@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import './about.css';
 
 const About = ({ onClose }) => {
@@ -8,26 +8,38 @@ const About = ({ onClose }) => {
     setClosing(true);
     setTimeout(() => {
       onClose();
-    }, 300);
+    }, 300); // Match this with your CSS transition duration
   };
 
   return (
-    <div className={`about-container ${closing ? 'slide-out' : ''}`}>
+    <div className={`about-overlay ${closing ? 'slide-out' : ''}`}>
+      <div className="about-card">
+        <header className="about-header">
+          <h2>ParaVision</h2>
+          <button onClick={handleClose} className="close-btn">
+            x
+          </button>
+        </header>
 
-      <div className='abt'><h5>ParaVision</h5>
-             <button onClick={handleClose} className='x'>X</button></div>
-      <video width="300" height="200" controls>
-        <source src="ParaVision Demo.mp4" type="video/mp4" />
-        Your browser does not support the video tag.</video>
-        <ul className='about'><b>
-         <li><span className='only'>Fast</span></li>
-          <li><span className='only'>More Accurate</span></li>
-          <li><span className='only'>Efficient</span></li></b>
-        </ul>
-        <div className='explain'>
-        <p>ParaVision is an innovation project from TeamABU 2025/2026. This project aims at empowering lab technicians is the testing phase of medical works.</p>
-        <br/><p>ParaVision is tailored for use on children and toddlers samples.</p>
+        <div className="about-content">
+          <video width="100%" controls>
+            <source src="ParaVision Demo.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+
+          <ul className="about-list">
+            <li><span className="highlight">Fast</span></li>
+            <li><span className="highlight">More Accurate</span></li>
+            <li><span className="highlight">Efficient</span></li>
+          </ul>
+
+          <div className="about-explanation">
+            <p>
+              ParaVision is an innovation project from TeamABU 2025/2026. This project aims at empowering lab technicians during the testing phase of medical workflows.
+            </p>
+          </div>
         </div>
+      </div>
     </div>
   );
 };

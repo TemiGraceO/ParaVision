@@ -1,16 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs/promises');
-const { spawn } = require('child_process'); // ? FIXED typo
 
 let win;
-let pythonProcess = null;
 
-// ---------- PATHS ----------
 const DATA_DIR = path.join(__dirname, 'data');
 const TESTS_DB = path.join(DATA_DIR, 'tests.json');
 
-// ---------- HELPERS ----------
 async function ensureFiles() {
   await fs.mkdir(DATA_DIR, { recursive: true });
   try {
@@ -28,7 +24,6 @@ async function writeJSON(file, data) {
   await fs.writeFile(file, JSON.stringify(data, null, 2));
 }
 
-// ---------- CREATE WINDOW ----------
 function createWindow() {
   win = new BrowserWindow({
     fullscreen: true,
@@ -38,28 +33,20 @@ function createWindow() {
       contextIsolation: true,
       sandbox: false,
       enableRemoteModule: false
-    },
+    }
   });
 
   const isProd = process.env.NODE_ENV === 'production';
   if (isProd) {
-    win.loadFile(path.join(__dirname, 'build', 'index.html'));
+    win.loadFile(path.join(__dirname, 'build/index.html'));
   } else {
-    win.loadURL('http://localhost:3001');
+    win.loadURL('http://localhost:3001'); // Your React dev server
   }
-
-  win.webContents.on('did-finish-load', () => {
-    win.webContents.openDevTools({ mode: 'detach' });
-  });
-
-  win.webContents.on('console-message', (_e, level, message) => {
-    console.log(`[RENDERER ${level}]: ${message}`);
-  });
 
   win.on('closed', () => (win = null));
 }
 
-// ---------- TEST HANDLERS ----------
+// ---------- IPC HANDLERS ----------
 ipcMain.handle('save-test', async (_e, test) => {
   await ensureFiles();
   const tests = await readJSON(TESTS_DB);
@@ -73,45 +60,80 @@ ipcMain.handle('get-tests', async () => {
   return await readJSON(TESTS_DB);
 });
 
-// ---------- NAVIGATION HANDLERS ----------
-ipcMain.handle('openMalariaTest', async (_event, testData) => {
-  win.webContents.send('navigate-to-malaria', testData);
+ipcMain.handle('openMalariaTest', async (_e, testData) => {
+  if (win) win.webContents.send('navigate-to-malaria', testData);
   return { success: true };
 });
 
-ipcMain.handle('openStoolTest', async (_event, testData) => {
-  win.webContents.send('navigate-to-stool', testData);
+ipcMain.handle('openStoolTest', async (_e, testData) => {
+  if (win) win.webContents.send('navigate-to-stool', testData);
   return { success: true };
 });
 
-ipcMain.handle('openBothTest', async (_event, testData) => {
-  win.webContents.send('navigate-to-both', testData);
+ipcMain.handle('openBothTest', async (_e, testData) => {
+  if (win) win.webContents.send('navigate-to-both', testData);
   return { success: true };
 });
 
-// ---------- HEALTH CHECK ----------
-ipcMain.handle('health-check', async () => {
+// ---------- GPIO CONTROL (NEW & CRITICAL) ----------
+ipcMain.handle('set-gpio', async (_event, payload) => {
   try {
-    const res = await fetch("http://127.0.0.1:8000/api/health");
-    return await res.json();
-  } catch (e) {
-    return { status: "offline", error: e.message };
+    const response = await fetch('http://localhost:8000/gpio/set', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`FastAPI error ${response.status}: ${errorText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to control GPIO via FastAPI:', error);
+    throw error;
   }
 });
 
-// ---------- APP ----------
+// ---------- PRINTING ----------
+ipcMain.handle('print-result', async (_event, htmlContent) => {
+  try {
+    const printWindow = new BrowserWindow({
+      show: false,
+      webPreferences: {
+        offscreen: true,
+        contextIsolation: true,
+        sandbox: true
+      }
+    });
+
+    await printWindow.loadURL(
+      'data:text/html;charset=utf-8,' + encodeURIComponent(htmlContent)
+    );
+
+    printWindow.webContents.on('did-finish-load', () => {
+      printWindow.webContents.print({ silent: false }, (success, errorType) => {
+        if (!success) console.error('Print Failed:', errorType);
+        printWindow.close();
+      });
+    });
+
+    return { success: true };
+  } catch (err) {
+    console.error('Print error:', err);
+    return { success: false, error: err.message };
+  }
+});
+
+// ---------- APP INIT ----------
 app.whenReady().then(async () => {
   await ensureFiles();
   createWindow();
-
-  // START PYTHON BACKEND (unchanged behavior)
-  pythonProcess = spawn("python", ["main.py"], {
-    cwd: path.join(__dirname, "python"),
-    stdio: "inherit"
-  });
 });
 
 app.on('window-all-closed', () => {
-  if (pythonProcess) pythonProcess.kill();
   if (process.platform !== 'darwin') app.quit();
 });

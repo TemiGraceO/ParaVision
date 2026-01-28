@@ -1,0 +1,75 @@
+{
+  "name": "paravision-app",
+  "version": "0.1.0",
+  "private": true,
+  "main": "main.js",
+  "homepage": "./",
+  "dependencies": {
+    "chart.js": "^4.5.1",
+    "electron-virtual-keyboard": "^1.0.7",
+    "onnxruntime-node": "^1.23.2",
+    "onnxruntime-web": "^1.23.2",
+    "react": "^19.2.0",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "^19.2.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.9.6",
+    "react-scripts": "^5.0.1",
+    "react-simple-keyboard": "^3.8.141",
+    "sweetalert2": "^11.26.3",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "electron": "^25.3.1",
+    "electron-builder": "^26.0.12"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "electron:dev": "electron .",
+    "electron:prod": "npm run build && electron .",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.paravision.app",
+    "files": [
+      "build/**/*",
+      "main.js",
+      "package.json"
+    ],
+    "extraResources": [
+      "python/**/*",
+      "model.onnx"
+    ],
+    "productName": "ParaVision",
+    "directories": {
+      "buildResources": "assets"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -8,11 +8,11 @@ const readFileAsync = promisify(fs.readFile);
 const unlinkAsync = promisify(fs.unlink);
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  // ---------- SAVE / GET TESTS ----------
+  // Test management
   saveTest: (test) => ipcRenderer.invoke('save-test', test),
   getTests: () => ipcRenderer.invoke('get-tests'),
 
-  // ---------- NAVIGATION ----------
+  // Navigation
   openMalariaTest: (testData) => ipcRenderer.invoke('openMalariaTest', testData),
   openStoolTest: (testData) => ipcRenderer.invoke('openStoolTest', testData),
   openBothTest: (testData) => ipcRenderer.invoke('openBothTest', testData),
@@ -23,67 +23,80 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('navigate-to-stool', (_e, data) => callback(data)),
   onNavigateToBoth: (callback) =>
     ipcRenderer.on('navigate-to-both', (_e, data) => callback(data)),
+  
+  // ? NEW: GPIO Control
+  setGPIO: (data) => ipcRenderer.invoke('set-gpio', data),
 
-  // ---------- CAMERA ----------
-  testCamera: async () => {
+  // Detection (FastAPI)
+  detectFrame: async (imageBase64) => {
     try {
-      const devices = await execAsync('ls /dev/video* 2>/dev/null || echo "none"');
-      if (!devices.stdout.includes('/dev/video')) {
-        return { success: false, error: "No camera detected" };
-      }
-
-      const v4l = await execAsync('v4l2-ctl --list-devices 2>/dev/null || true');
-      return { success: true, devices: devices.stdout, v4l2: v4l.stdout };
-    } catch (e) {
-      return { success: false, error: e.message };
+      const response = await fetch(imageBase64);
+      const blob = await response.blob();
+      const formData = new FormData();
+      formData.append('file', blob, 'frame.jpg');
+      const res = await fetch('http://localhost:8000/detect', { 
+        method: 'POST', 
+        body: formData 
+      });
+      if (!res.ok) throw new Error(res.statusText);
+      return await res.json();
+    } catch (error) {
+      return { success: false, error: error.message };
     }
   },
 
-  captureFrame: async () => {
-    const framePath = `/tmp/frame_${Date.now()}.jpg`;
+  detectFrameStool: async (imageBase64) => {
     try {
-      const commands = [
-        `fswebcam -d /dev/video0 --resolution 640x480 --jpeg 85 -S 10 ${framePath}`,
-        `ffmpeg -f v4l2 -i /dev/video0 -vframes 1 -y ${framePath}`,
-      ];
+      const response = await fetch(imageBase64);
+      const blob = await response.blob();
+      const formData = new FormData();
+      formData.append('file', blob, 'frame.jpg');
+      const res = await fetch('http://localhost:8000/detect_stool', { 
+        method: 'POST', 
+        body: formData 
+      });
+      if (!res.ok) throw new Error(res.statusText);
+      return await res.json();
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
 
-      let captured = false;
-      for (const cmd of commands) {
-        try {
-          await execAsync(cmd);
-          if (fs.existsSync(framePath)) { captured = true; break; }
-        } catch {}
-      }
-
-      if (!captured) throw new Error("Camera capture failed");
-
+  // Camera capture
+  captureBloodFrame: async () => {
+    const framePath = `/tmp/blood_frame_${Date.now()}.jpg`;
+    try {
+      await execAsync(
+        `ffmpeg -loglevel error -f v4l2 -video_size 640x480 -i /dev/video0 -frames:v 1 -q:v 5 -y ${framePath}`
+      );
       const data = await readFileAsync(framePath);
       await unlinkAsync(framePath);
-
-      return { success: true, image: data.toString("base64"), size: data.length };
+      return { 
+        success: true, 
+        dataUrl: `data:image/jpeg;base64,${data.toString('base64')}` 
+      };
     } catch (e) {
-      try { await unlinkAsync(framePath); } catch {}
       return { success: false, error: e.message };
     }
   },
 
-  // ---------- PYTORCH DETECTION ----------
-  detectMalaria: async (imageBase64) => {
-    const { spawn } = require('child_process');
-    return new Promise((resolve) => {
-      const py = spawn('python3', ['python/detect.py'], { cwd: __dirname });
+  captureStoolFrame: async () => {
+    const framePath = `/tmp/stool_frame_${Date.now()}.jpg`;
+    try {
+      await execAsync(
+        `ffmpeg -loglevel error -f v4l2 -video_size 640x480 -i /dev/video2 -frames:v 1 -q:v 5 -y ${framePath}`
+      );
+      const data = await readFileAsync(framePath);
+      await unlinkAsync(framePath);
+      return { 
+        success: true, 
+        dataUrl: `data:image/jpeg;base64,${data.toString('base64')}` 
+      };
+    } catch (e) {
+      return { success: false, error: e.message };
+    }
+  },
 
-      let data = '';
-      py.stdout.on('data', (chunk) => { data += chunk.toString(); });
-      py.stderr.on('data', (err) => console.error(err.toString()));
-
-      py.on('close', () => {
-        try { resolve(JSON.parse(data)); }
-        catch (e) { resolve({ success: false, error: e.message }); }
-      });
-
-      py.stdin.write(JSON.stringify({ image: imageBase64 }) + '\n');
-      py.stdin.end();
-    });
-  }
+  // Printing
+  printResult: (htmlContent) => ipcRenderer.invoke('print-result', htmlContent)
 });

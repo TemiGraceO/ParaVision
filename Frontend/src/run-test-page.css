@@ -107,7 +107,7 @@
 
 /* Start Button */
 .btn31 {
-  float: right;
+  margin-left:85%;
   margin-top: 5%;
   background-color: #4fa5a7;
   color: #fff;

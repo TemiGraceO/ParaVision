@@ -1,0 +1,64 @@
+.focus-blood-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  pointer-events: none;   /* ?? BLOCK ALL CLICKS ON BACKGROUND */
+  z-index: 9999;
+}
+
+.focus-blood-overlay.show {
+  pointer-events: none;
+}
+
+.focus-blood-modal {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+
+  pointer-events: auto;   /* ?? ALLOW CLICKS ONLY INSIDE MODAL */
+}
+
+.focus-blood-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #4fa5a7;        /* dark header */
+  color: #ffffff;             /* visible text */
+  padding: 10px 14px;
+  margin: -16px -16px 12px;   /* stretch to modal edges */
+  border-radius: 8px 8px 0 0;
+}
+
+.focus-blood-header h3{
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+.focus-blood-body {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.focus-blood-body canvas {
+  border: 2px solid #00c48c;
+  background: #000;
+}
+
+.close-x {
+  background: #4fa5a7;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 4px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}

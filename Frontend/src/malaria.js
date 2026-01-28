@@ -1,135 +1,311 @@
-import React, { useState, useEffect } from 'react';
-import './malaria.css';
-import LiveCapture from './LiveCapture'; // Live capture component
+import React, { useEffect, useRef, useState } from "react";
+import LiveCapture from "./LiveCapture";
+import "./malaria.css";
+import { restoreLEDs } from "./restoreLEDs";
+import ViewTestResult from "./ViewTestResult";
 
-const MalariaTest = ({ testData, onClose, onComplete }) => {
-  const [analysisStatus, setAnalysisStatus] = useState('analyzing');
-  const [results, setResults] = useState(null);
-  const [parasitesCount, setParasitesCount] = useState(0);
-  const [confidence, setConfidence] = useState(0);
-  const [showLiveCapture, setShowLiveCapture] = useState(false); // Controls live capture modal
+const TEST_DURATION = 60;
 
-  // AUTO-START ANALYSIS - 2 MINUTES
+export default function Malaria({ patient, onClose }) {
+  const [timeLeft, setTimeLeft] = useState(TEST_DURATION);
+  const [parasiteCount, setParasiteCount] = useState(0);
+  const [testComplete, setTestComplete] = useState(false);
+  const [showLive, setShowLive] = useState(false);
+
+  const [testId, setTestId] = useState(null);
+  const [showTestResult, setShowTestResult] = useState(false);
+  const [viewingTest, setViewingTest] = useState(null);
+
+  const detectionIntervalRef = useRef(null);
+  const timerRef = useRef(null);
+
+  /* =============== CLEANUP (LEDs) =============== */
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const mockResults = {
-        parasites: Math.floor(Math.random() * 10) + 1,
-        confidence: (Math.random() * 0.3 + 0.7).toFixed(2),
-        species: ['P. falciparum', 'P. vivax'][Math.floor(Math.random() * 2)],
-        severity: 'Low'
-      };
-      
-      setResults(mockResults);
-      setParasitesCount(mockResults.parasites);
-      setConfidence(mockResults.confidence);
-      setAnalysisStatus('complete');
-    }, 120000);
+    const handleUnload = () => restoreLEDs();
+    window.addEventListener("beforeunload", handleUnload);
 
-    return () => clearTimeout(timer);
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload);
+      restoreLEDs();
+    };
   }, []);
 
-  const handleViewResults = () => {
-    console.log('Viewing results for:', testData);
-    // TODO: Open results view
+  /* =============== LIVE DETECTION =============== */
+  useEffect(() => {
+    if (testComplete) return;
+
+    detectionIntervalRef.current = setInterval(async () => {
+      try {
+        const frame = await window.electronAPI.captureBloodFrame();
+        if (!frame?.success) return;
+
+        const result = await window.electronAPI.detectFrame(frame.dataUrl);
+        if (result?.success && Array.isArray(result.boxes)) {
+          setParasiteCount(result.boxes.length);
+        }
+      } catch (err) {
+        console.error("Detection error:", err);
+      }
+    }, 1000);
+
+    return () => clearInterval(detectionIntervalRef.current);
+  }, [testComplete]);
+
+  /* =============== RESULT BUILDER =============== */
+  const buildTestObject = () => {
+    const analysis = {
+      malaria_status: parasiteCount > 0 ? "Positive" : "Negative",
+      parasite_density: `${parasiteCount} /µL`,
+      stool: {
+        Ascaris: "-",
+        Hookworm: "-",
+        Trichuris: "-",
+      },
+      isPending: false,
+    };
+
+    return {
+      patientId: patient.id,
+      patientName: patient.name,
+      type: "Blood",
+      smear: "Blood Film",
+      date: new Date().toISOString(),
+      status: "completed",
+      result: {
+        status: analysis.malaria_status,
+        count_per_ul: parasiteCount,
+        success: parasiteCount > 0,
+        malaria_status: analysis.malaria_status,
+        parasite_density: parasiteCount,
+      },
+      analysis,
+    };
   };
 
-  const handlePrintResults = () => {
-    console.log('Printing results for:', testData);
-    window.print(); // Opens print dialog
+  /* =============== AUTO SAVE =============== */
+  const autoSave = async () => {
+    if (testId) return testId;
+
+    try {
+      const test = buildTestObject();
+      const saved = await window.electronAPI.saveTest(test);
+      if (saved?.id) {
+        setTestId(saved.id);
+        return saved.id;
+      }
+      return null;
+    } catch (err) {
+      console.error("Auto-save failed:", err);
+      return null;
+    }
   };
 
-  const handleLiveCapture = () => {
-    setShowLiveCapture(true); // Opens live capture with Orange Pi camera
+  /* =============== TIMER =============== */
+  useEffect(() => {
+    if (testComplete) return;
+
+    if (timeLeft <= 0) {
+      clearInterval(detectionIntervalRef.current);
+      clearTimeout(timerRef.current);
+
+      const finalTest = buildTestObject();
+
+      const saveTestAndComplete = async () => {
+        try {
+          const saved = await window.electronAPI.saveTest(finalTest);
+          if (saved?.id) {
+            setTestId(saved.id);
+          }
+        } catch (err) {
+          console.error("Failed to save test:", err);
+        }
+
+        setTestComplete(true);
+        setShowLive(false);
+      };
+
+      saveTestAndComplete();
+      return;
+    }
+
+    timerRef.current = setTimeout(() => {
+      setTimeLeft((t) => t - 1);
+    }, 1000);
+
+    return () => clearTimeout(timerRef.current);
+  }, [timeLeft, testComplete]);
+
+  /* =============== VIEW RESULT FROM BACKEND =============== */
+  const handleViewTestResult = async () => {
+    if (!testId) {
+      alert("Test not yet saved. Complete the test first.");
+      return;
+    }
+
+    try {
+      // Fetch all tests for this patient
+      const res = await fetch(
+        `http://localhost:8000/api/tests?patientId=${patient.id}`
+      );
+      const allTests = await res.json();
+
+      // Find the specific test by id
+      const thisTest = allTests.find((t) => t.id === testId);
+      if (!thisTest) {
+        alert("Test not found in backend.");
+        return;
+      }
+
+      // Ensure required fields exist
+      const displayTest = {
+        ...thisTest,
+        patientId: thisTest.patientId || patient.id,
+        patientName: thisTest.patientName || patient.name,
+        result:
+          thisTest.result ||
+          {
+            success: parasiteCount > 0,
+            malaria_status: parasiteCount > 0 ? "Positive" : "Negative",
+            parasite_density: parasiteCount,
+          },
+        analysis:
+          thisTest.analysis ||
+          {
+            malaria_status: parasiteCount > 0 ? "Positive" : "Negative",
+            parasite_density: `${parasiteCount} /µL`,
+            stool: { Ascaris: "-", Hookworm: "-", Trichuris: "-" },
+          },
+      };
+
+      setViewingTest(displayTest);
+      setShowTestResult(true);
+    } catch (err) {
+      console.error("Failed to fetch test:", err);
+      alert("Could not fetch test details.");
+    }
   };
 
+  /* =============== PRINT =============== */
+  const handlePrintTest = async () => {
+    if (!testId) {
+      alert("Test not saved yet. Please wait.");
+      return;
+    }
+
+    try {
+      await fetch("http://localhost:8000/api/print-report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ test_id: testId }),
+      });
+
+      alert("Print job sent successfully!");
+    } catch (err) {
+      console.error("Print failed:", err);
+      alert("Failed to print result.");
+    }
+  };
+
+  /* =============== UI =============== */
   return (
     <div className="malaria-overlay">
-      <div className="malaria-modal">
+      <div className="malaria-card">
+        {/* Header */}
         <header className="malaria-header">
-          <h2>Malaria Analysis</h2>
-          <button onClick={onClose}>×</button>
+          <h2>Malaria Diagnostic Test</h2>
+          <button className="close-btn" onClick={onClose}>
+            x
+          </button>
         </header>
 
-        <div className="malaria-content">
-          <div className="patient-info">
-            <h3>Patient: {testData.name}</h3>
-            <p>ID: {testData.patientId} | Smear: {testData.smear}</p>
-          </div>
+        {/* Body */}
+        <div className="malaria-body">
+          {!testComplete ? (
+            <>
+              <div className="malaria-spinner"></div>
 
-          <div className="analysis-section">
-            {/* ANALYZING SCREEN */}
-            {analysisStatus === 'analyzing' && (
-              <div className="analyzing-screen">
-                <div className="spinner"></div>
-                <p>Scanning blood sample</p>
-                
-                <div className="progress-container">
-                  <div className="progress-bar">
-                    <div className="progress-fill"></div>
-                  </div>
-                  <div className="progress-text">Analysis Progress</div>
+              <div className="malaria-info">
+                <div className="info-item">
+                  <label>Time Remaining</label>
+                  <span>{timeLeft}s</span>
                 </div>
-                
-                <div className="modal-footer">
-                  <button className="live-capture-btn" onClick={handleLiveCapture}>
-                    View Live Capture
-                  </button>
+                <div className="info-item">
+                  <label>Parasites Detected</label>
+                  <span>{parasiteCount}</span>
                 </div>
               </div>
-            )}
 
-            {/* TEST COMPLETE SCREEN - SHOWS PARASITES & SEVERITY */}
-            {analysisStatus === 'complete' && results && (
-              <div className="results-screen">
-                {/* "TEST COMPLETE" HEADER */}
-                <div style={{textAlign: 'center', marginBottom: '40px'}}>
-                  <h1 style={{ 
-                    color: '#4fa5a7', 
-                    fontSize: '48px', 
-                    fontWeight: '800',
-                    margin: '0',
-                    textShadow: '0 4px 12px rgba(79,165,167,0.3)'
-                  }}>
-                    ? Test Complete
-                  </h1>
-                </div>
-
-                {/* KEEP ONLY PARASITES & SEVERITY */}
-                <div className="results-grid">
-                  <div className="result-card positive">
-                    <h4>{parasitesCount}</h4>
-                    <p>Parasites/µL</p>
-                  </div>
-                  <div className="result-card">
-                    <h4>{results.severity}</h4>
-                    <p>Severity</p>
-                  </div>
-                </div>
-                
-                {/* VIEW & PRINT BUTTONS */}
-                <div className="actions">
-                  <button className="view-btn" onClick={handleViewResults}>
-                    View Results
-                  </button>
-                  <button className="print-btn" onClick={handlePrintResults}>
-                    Print Results
-                  </button>
-                </div>
+              <button
+                className="malaria-btn primary"
+                onClick={() => setShowLive(true)}
+              >
+                View Live Capture
+              </button>
+            </>
+          ) : (
+            <>
+              <div className="malaria-checkmark">
+                <svg viewBox="0 0 52 52">
+                  <circle
+                    cx="26"
+                    cy="26"
+                    r="25"
+                    fill="none"
+                    stroke="#4CAF50"
+                    strokeWidth="2"
+                  />
+                  <path
+                    fill="none"
+                    stroke="#4CAF50"
+                    strokeWidth="4"
+                    d="M14 27l7 7 16-16"
+                  />
+                </svg>
               </div>
-            )}
-          </div>
+
+              <h3 className="result-title">Test Complete</h3>
+              <p className="result-count">
+                Total Parasites Detected: {parasiteCount}
+              </p>
+
+              <div className="button-group">
+                <button
+                  className="malaria-btn secondary"
+                  onClick={handleViewTestResult}
+                >
+                  View Result Details
+                </button>
+
+                <button
+                  className="malaria-btn secondary print"
+                  onClick={handlePrintTest}
+                >
+                  Print Result
+                </button>
+              </div>
+            </>
+          )}
         </div>
-
-        {/* LIVE CAPTURE OVERLAY - FULLY FUNCTIONAL */}
-        {showLiveCapture && (
-          <LiveCapture 
-            onClose={() => setShowLiveCapture(false)}  // Closes live capture
-            patientData={testData}                     // Passes patient info
-          />
-        )}
       </div>
+
+      {/* Live Capture Modal */}
+      <LiveCapture
+        visible={showLive}
+        currentCount={parasiteCount}
+        onClose={() => setShowLive(false)}
+        onDetection={setParasiteCount}
+      />
+
+      {showTestResult && viewingTest && (
+        <ViewTestResult
+          test={viewingTest}
+          patient={patient}
+          onClose={() => {
+            setShowTestResult(false);
+            setViewingTest(null);
+          }}
+        />
+      )}
     </div>
   );
-};
-
-export default MalariaTest;
+}

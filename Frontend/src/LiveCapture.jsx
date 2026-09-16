@@ -1,96 +1,137 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./LiveCapture.css";
 
-export default function LiveCapture({ onClose }) {
+const INTERVAL = 1000; // ms between detections
+const DISTANCE_THRESHOLD = 30; // pixels (tune if needed)
+
+const LiveCapture = ({ visible, onClose, onDetection, currentCount = 0 }) => {
   const canvasRef = useRef(null);
-  const runningRef = useRef(false);
-  const [status, setStatus] = useState("Initializing camera…");
-  const [detectionsCount, setDetectionsCount] = useState(0);
+  const intervalRef = useRef(null);
 
-  const drawBoxes = (ctx, boxes) => {
-    boxes.forEach((b) => {
-      ctx.strokeStyle = "yellow";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(b.x, b.y, b.width, b.height);
+  // Store detected parasites as centers { x, y }
+  const parasitesRef = useRef([]);
 
-      ctx.fillStyle = "black";
-      ctx.fillRect(b.x, b.y - 18, 90, 18);
+  const [totalCount, setTotalCount] = useState(currentCount);
 
-      ctx.fillStyle = "yellow";
-      ctx.font = "bold 13px sans-serif";
-      ctx.fillText(`${Math.round(b.confidence * 100)}%`, b.x + 5, b.y - 4);
+  /* ---------------- HELPER ---------------- */
+  const isNewParasite = (x, y) => {
+    return !parasitesRef.current.some(p => {
+      const dx = p.x - x;
+      const dy = p.y - y;
+      return Math.sqrt(dx * dx + dy * dy) < DISTANCE_THRESHOLD;
     });
   };
 
-  const loop = async () => {
-    if (!runningRef.current) return;
+  /* -------- RESET WHEN MODAL OPENS -------- */
+  useEffect(() => {
+    if (visible) {
+      parasitesRef.current = [];
+      setTotalCount(currentCount);
+    }
+  }, [visible, currentCount]);
 
-    try {
-      const frame = await window.electronAPI.captureFrame();
-      if (!frame.success) {
-        requestAnimationFrame(loop);
-        return;
-      }
-
-      const img = new Image();
-      img.onload = async () => {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
-        canvas.width = 320;
-        canvas.height = 240;
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-        const detection = await window.electronAPI.detectMalaria(frame.image);
-        if (detection.success) {
-          drawBoxes(ctx, detection.boxes);
-          setDetectionsCount(detection.boxes.length);
-          setStatus(`Detections: ${detection.boxes.length}`);
-        } else {
-          console.error(detection.error);
-          setStatus("Detection failed");
-        }
-      };
-      img.src = `data:image/jpeg;base64,${frame.image}`;
-    } catch (e) {
-      console.error(e);
-      setStatus("Camera error");
+  /* -------- CAPTURE + DETECTION LOOP -------- */
+  useEffect(() => {
+    if (!visible) {
+      clearInterval(intervalRef.current);
+      return;
     }
 
-    requestAnimationFrame(loop);
-  };
+    let isProcessing = false;
 
-  useEffect(() => {
-    runningRef.current = true;
+    const captureLoop = async () => {
+      if (isProcessing) return;
+      isProcessing = true;
 
-    (async () => {
-      const cam = await window.electronAPI.testCamera();
-      if (!cam.success) { setStatus("Camera not found"); return; }
+      try {
+        const frame = await window.electronAPI.captureBloodFrame();
+        if (!frame?.success) return;
 
-      setStatus("Camera ready");
-      requestAnimationFrame(loop);
-    })();
+        const img = new Image();
+        img.onload = async () => {
+          const canvas = canvasRef.current;
+          if (!canvas) return;
 
-    return () => { runningRef.current = false; };
-  }, []);
+          const ctx = canvas.getContext("2d");
+          canvas.width = 960;
+          canvas.height = 540;
+
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          const result = await window.electronAPI.detectFrame(frame.dataUrl);
+          if (!result?.success || !result.boxes) return;
+
+          ctx.strokeStyle = "#00c48c";
+          ctx.lineWidth = 2;
+          ctx.font = "14px Arial";
+          ctx.fillStyle = "#ff4d4d";
+
+          result.boxes.forEach(b => {
+            // Scale to canvas
+            const x1 = b.x1 * 3;
+            const y1 = b.y1 * 2;
+            const w = (b.x2 - b.x1) * 3;
+            const h = (b.y2 - b.y1) * 2;
+
+            const centerX = x1 + w / 2;
+            const centerY = y1 + h / 2;
+
+            if (isNewParasite(centerX, centerY)) {
+              parasitesRef.current.push({ x: centerX, y: centerY });
+            }
+
+            ctx.strokeRect(x1, y1, w, h);
+            ctx.fillText("Parasitized", x1, y1 - 5);
+          });
+
+          const updatedTotal = parasitesRef.current.length;
+          setTotalCount(updatedTotal);
+          onDetection?.(updatedTotal);
+        };
+
+        img.src = frame.dataUrl;
+      } catch (err) {
+        console.error("LiveCapture error:", err);
+      } finally {
+        isProcessing = false;
+      }
+    };
+
+    captureLoop();
+    intervalRef.current = setInterval(captureLoop, INTERVAL);
+
+    return () => clearInterval(intervalRef.current);
+  }, [visible, onDetection]);
+
+  /* ---------------- RENDER ---------------- */
+  if (!visible) return null;
 
   return (
-    <div className="live-capture-overlay">
-      <div className="live-capture-modal">
+    <div className={`live-overlay ${visible ? "show" : ""}`}>
+      <div
+        className="live-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="live-header">
-          <h2>Live Parasite Detection</h2>
-          <button onClick={onClose}>X</button>
+          <h2>Live View</h2>
+          <button className="close-x" onClick={onClose}>X</button>
         </div>
-        <canvas ref={canvasRef} />
-        <div className="status-bar">
-          <strong>{status}</strong>
-          {detectionsCount > 0 && (
-            <span style={{ marginLeft: 20, background: "yellow", padding: "4px 10px", borderRadius: "8px" }}>
-              {detectionsCount} detections
-            </span>
-          )}
+
+        <div className="camera-wrapper">
+          <canvas ref={canvasRef} />
         </div>
-        <button className="close-btn" onClick={onClose}>Close</button>
+
+        <div className="live-overlay-stats">
+          <h3>Total Parasites: <b>{totalCount}</b></h3>
+        </div>
+
+        <div className="live-footer">
+          <button className="green-btn" onClick={onClose}>Close</button>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default LiveCapture;
